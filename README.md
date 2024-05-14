@@ -39,3 +39,5 @@ A meditation platform that provides users a variety of filterable audio backgrou
 <img src="Planning/api-routes.drawio" alt/>
 
 ## Trello
+
+https://trello.com/b/9Db4wvOf/meditationapp
