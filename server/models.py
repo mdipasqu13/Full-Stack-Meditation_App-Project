@@ -1,5 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy.ext.hybrid import hybrid_property
 
 from config import db, bcrypt
 
@@ -10,6 +11,8 @@ class User(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String, nullable=False)
     
 # relationships here
+    sessions = db.relationship('Session', back_populates='user')
+
 
 # serialize rules here
 
@@ -37,7 +40,8 @@ class Meditation(db.Model, SerializerMixin):
     audio_url = db.Column(db.String)
     
     # relationships here
-
+    sessions = db.relationship('Session', back_populates='meditation')
+    categories = db.relationship('MeditationCategory', back_populates='meditation')
     # serialize rules here
     
 class Session(db.Model, SerializerMixin):
@@ -50,7 +54,8 @@ class Session(db.Model, SerializerMixin):
     # I think db.Integer is correct? This is the time stamp for the calendar. 
     
     # relationships here
-
+    user = db.relationship('User', back_populates='sessions')
+    meditation = db.relationship('Meditation', back_populates='sessions')
     # serialize rules here  
     
 class Category(db.Model, SerializerMixin):
@@ -59,6 +64,7 @@ class Category(db.Model, SerializerMixin):
     name = db.Column(db.String)
     
     # relationships here
+    meditation_categories = db.relationship('MeditationCategory', back_populates='category')
 
     # serialize rules here
     
@@ -68,5 +74,7 @@ class MeditationCategory(db.Model, SerializerMixin):
     meditation_id = db.Column(db.Integer, db.ForeignKey('meditations.id'), nullable=False)
 
     # relationships here
+    meditation = db.relationship('Meditation', back_populates='categories')
+    category = db.relationship('Category', back_populates='meditation_categories')
 
     # serialize rules here

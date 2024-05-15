@@ -13,6 +13,15 @@ sqlalchemy-serializer = "*"
 flask-restful = "*"
 flask-cors = "*"
 faker = "*"
+flask-jwt-extended = "*"
+flask-login = "*"
+flask-bcrypt = "*"
+
 
 [requires]
 python_full_version = "3.8.13"
+
+[dev-packages]
+flask-login = "*"
+flask-jwt-extended = "*"
+flask-bcrypt = "*"
