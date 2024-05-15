@@ -1,0 +1,34 @@
+<mxfile host="65bd71144e">
+    <diagram id="APvtiDXBzcffSTybLEeo" name="Page-1">
+        <mxGraphModel dx="554" dy="520" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="40" width="490" height="430" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="NAVBAR" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="50" width="470" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Username's Profile" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="100" width="170" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Previous Session" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="200" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Current Streak" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="330" y="100" width="170" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="My Favorites" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="330" y="200" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="Previous Session" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="290" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="Delete User Profile" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="420" width="80" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

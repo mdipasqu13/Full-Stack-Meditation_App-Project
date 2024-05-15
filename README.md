@@ -17,27 +17,33 @@ A meditation platform that provides users a variety of filterable audio backgrou
 * Users will be able to favorite audio files or combinations of audio background and duration for future sessions easy access. 
 * Most played audio suggestions feature on home page for easy access.
 * Track mood over time by recording mood each day
+* Daily inspirational mantra on homepage
 
 ## Wireframe
 
-<img src="Planning/homepage.png" alt/>
+<img src="Planning/homepage.png" alt="homepage"/>
+<img src="Planning/meditations_page.drawio" alt="meditations_page"/>
+<img src="Planning/calendar_page.drawio" alt="calendar_page"/>
+<img src="Planning/login_page.drawio" alt="login_page"/>
+<img src="Planning/profile_page.drawio" alt="profile_page">
 
 ## React Routes
 
-<img src="Planning/routes.drawio" alt/>
+<img src="Planning/routes.drawio" alt="routes"/>
 
 ## React Component Tree
 
-<img src="Planning/component-tree.drawio" alt/>
+<img src="Planning/component-tree.drawio" alt="component-tree"/>
 
 ## Database Schema
 
-<img src="Planning/schema.drawio" alt/>
+<img src="Planning/schema.drawio" alt="schema"/>
 
 ## API Routes
 
-<img src="Planning/api-routes.drawio" alt/>
+<img src="Planning/api-routes.drawio" alt="api_routes"/>
 
 ## Trello
 
 https://trello.com/b/9Db4wvOf/meditationapp
+<img src="Planning/kanban_board.png" alt="kanban_board"/>
