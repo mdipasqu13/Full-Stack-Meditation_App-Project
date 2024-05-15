@@ -203,12 +203,11 @@ class MeditationCategories(Resource):
 
 api.add_resource(MeditationCategories, '/meditation_categories')
         
-# Views go here!
-
+        
 @app.route('/')
 def index():
     return '<h1>Meditation Project Server</h1>'
-
+# could do search bar here instead
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

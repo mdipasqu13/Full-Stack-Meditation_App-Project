@@ -72,7 +72,7 @@ class MeditationCategory(db.Model, SerializerMixin):
     __tablename__ = 'meditation_category'
     id = db.Column(db.Integer, primary_key=True)
     meditation_id = db.Column(db.Integer, db.ForeignKey('meditations.id'), nullable=False)
-
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     # relationships here
     meditation = db.relationship('Meditation', back_populates='categories')
     category = db.relationship('Category', back_populates='meditation_categories')
