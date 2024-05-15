@@ -22,26 +22,26 @@ A meditation platform that provides users a variety of filterable audio backgrou
 ## Wireframe
 
 <img src="Planning/homepage.png" alt="homepage"/>
-<img src="Planning/meditations_page.drawio" alt="meditations_page"/>
-<img src="Planning/calendar_page.drawio" alt="calendar_page"/>
-<img src="Planning/login_page.drawio" alt="login_page"/>
-<img src="Planning/profile_page.drawio" alt="profile_page">
+<img src="Planning/MeditationsPage.png" alt="meditations_page"/>
+<img src="Planning/CalendarPage.png" alt="calendar_page"/>
+<img src="Planning/SignInPage.png" alt="login_page"/>
+<img src="Planning/ProfilePage.png" alt="profile_page">
 
 ## React Routes
 
-<img src="Planning/routes.drawio" alt="routes"/>
+<img src="Planning/ReactRoutes.png" alt="routes"/>
 
 ## React Component Tree
 
-<img src="Planning/component-tree.drawio" alt="component-tree"/>
+<img src="Planning/ComponentTree.png" alt="component-tree"/>
 
 ## Database Schema
 
-<img src="Planning/schema.drawio" alt="schema"/>
+<img src="Planning/Schema.png" alt="schema"/>
 
 ## API Routes
 
-<img src="Planning/api-routes.drawio" alt="api_routes"/>
+<img src="Planning/API Routes.png" alt="api_routes"/>
 
 ## Trello
 
