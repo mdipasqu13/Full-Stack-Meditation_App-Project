@@ -2,9 +2,9 @@
   background-color: #fff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: fixed;
-  width: 100%; /* Use 100% to ensure it spans the entire width */
+  width: 100%; 
   top: 0;
-  left: 0; /* Ensure it starts from the left edge */
+  left: 0; 
   z-index: 1000;
 }
 
@@ -31,7 +31,7 @@
 .navbar-links {
   display: flex;
   gap: 1rem;
-  flex-wrap: wrap; /* Allow wrapping if necessary */
+  flex-wrap: wrap; 
 }
 
 .navbar-link {

@@ -36,7 +36,7 @@ function App() {
   
   return (
     <>
-     <NavBar /> {/* Place NavBar here to ensure it appears on all pages */}
+     <NavBar /> 
       <div className="app">
         
         <Routes>
