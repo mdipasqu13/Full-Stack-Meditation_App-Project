@@ -4,7 +4,7 @@ App.jsx
 import './App.css';
 import { Route, Routes } from "react-router-dom";
 // import { useState, useEffect } from 'react';
-// import NavBar from './components/NavBar';
+import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import SignIn from './pages/SignIn';
@@ -36,12 +36,12 @@ function App() {
   
   return (
     <>
+     <NavBar /> {/* Place NavBar here to ensure it appears on all pages */}
       <div className="app">
-        {/* NavBar component that receives user state and updateUser function */}
-        {/* <NavBar user={user} updateUser={updateUser}/> */}
-        {/* Router setup with routes for different pages */}
+        
         <Routes>
           <Route path="/" element={<Home />} />
+          {/* <Route path="/profile" element={<Profile user={user} updateUser={updateUser}/>} /> */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/signin" element={<SignIn/> } />
         </Routes>
