@@ -36,7 +36,7 @@ def seed_users(num_users=3):
         users = []
         for _ in range(num_users):
             username = fake.user_name()
-            password = fake.password()
+            password = 'password123'
             user = User(username=username)
             user.password_hash = password
             users.append(user)

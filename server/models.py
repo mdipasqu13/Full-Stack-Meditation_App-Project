@@ -1,6 +1,10 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import validates
+from sqlalchemy import DateTime
+
+
 
 from config import db, bcrypt
 
@@ -31,6 +35,14 @@ class User(db.Model, SerializerMixin):
             self._password_hash, password.encode('utf-8') #check to see if encrypted password match
         )
         
+    @validates('username')
+    def validate_username(self, key, username):
+        if not username:
+            raise ValueError("Username cannot be empty")
+        if len(username) < 4:
+            raise ValueError("Username must be at least 4 characters long")
+        return username
+        
 class Meditation(db.Model, SerializerMixin):
     __tablename__ = 'meditations'
     id = db.Column(db.Integer, primary_key=True)
@@ -44,13 +56,39 @@ class Meditation(db.Model, SerializerMixin):
     categories = db.relationship('MeditationCategory', back_populates='meditation')
     # serialize rules here
     
+    @validates('title')
+    def validate_title(self, key, title):
+        if not title:
+            raise ValueError("Title cannot be empty")
+        return title
+
+    # @validates('description')
+    # def validate_description(self, key, description):
+    #     if not description:
+    #         raise ValueError("Description cannot be empty")
+    #     return description
+    # let's see if I actually write descriptions for all
+
+    @validates('duration')
+    def validate_duration(self, key, duration):
+        if not duration:
+            raise ValueError("Duration cannot be empty")
+        return duration
+
+    @validates('audio_url')
+    def validate_audio_url(self, key, audio_url):
+        if not audio_url:
+            raise ValueError("Audio URL cannot be empty")
+        return audio_url
+    
 class Session(db.Model, SerializerMixin):
     __tablename__ = 'sessions'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     meditation_id = db.Column(db.Integer, db.ForeignKey('meditations.id'), nullable=False)
     journal_entry = db.Column(db.String)
-    created_at = db.Column(db.Integer) 
+    created_at = db.Column(db.DateTime)
+    # created_at = db.Column(DateTime, default=func.now()) unsure of proper syntax?
     # I think db.Integer is correct? This is the time stamp for the calendar. 
     
     # relationships here
