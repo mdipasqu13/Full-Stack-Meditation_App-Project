@@ -6,7 +6,7 @@ A meditation platform that provides users a variety of filterable audio backgrou
 
 * List of meditation audio options: A comprehensive database of audio background options that users can browse and choose from. 
 * Filterable: Users can filter through audio options based on tag, category and duration, etc. 
-* User Login: Secure login funcitonality for personalized user experience. 
+* User Login: Secure login functionality for personalized user experience. 
 * Calendar Feature: users can see and access their previous sessions stored in database. 
 * Journal Feature: users can record their thoughts after each session, view, edit and delete them. 
 
