@@ -1,0 +1,6 @@
+flask_bcrypt
+flask_cors
+flask_sqlalchemy
+flask_migrate
+sqlalchemy_serializer
+faker
