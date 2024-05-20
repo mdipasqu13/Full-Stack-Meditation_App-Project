@@ -6,11 +6,31 @@ from sqlalchemy import desc
 
 from config import app, db, api
 
+# added this route for updating sessions
+@app.route('/update_session/<int:id>', methods=['PATCH'])
+def update_session(id):
+    data = request.get_json()
+    session = Session.query.get(id)
+    if not session:
+        return make_response({'error': 'Session not found'}, 404)
+    
+    try:
+        for key, value in data.items():
+            setattr(session, key, value)
+        db.session.commit()
+        return make_response(session.to_dict(), 200)
+    except Exception as e:
+        db.session.rollback()
+        return make_response({'error': str(e)}, 400)
+
 # routes for login and user authentication 
 @app.route('/register', methods=['POST'])
 def register():
     username = request.form.get('username')
     password = request.form.get('password')
+    
+    if not username or not password:
+        return make_response({'error': "Username and password are required"}, 400)
 
     user = User(username=username)
     user.password_hash = password
@@ -18,7 +38,8 @@ def register():
     db.session.add(user)
     db.session.commit()
 
-    return 'User registered successfully'
+    # return 'User registered successfully'
+    return jsonify({'message': 'User registered successfully'}), 201
 
 @app.route('/logout', methods=["GET"])
 def logout():
@@ -43,12 +64,19 @@ def login():
 
     user = User.query.filter_by(username=username).first()
 
+    # if user and user.check_password(password):
+    #     # Authentication successful
+    #     return 'Login successful'
+    # else:
+    #     # Authentication failed
+    #     return 'Invalid credentials'
     if user and user.check_password(password):
-        # Authentication successful
-        return 'Login successful'
+        session['user_id'] = user.id
+        response = make_response({'message': 'Login successful'}, 200)
+        response.set_cookie('user_id', str(user.id))
+        return response
     else:
-        # Authentication failed
-        return 'Invalid credentials'
+        return make_response({'error': 'Invalid credentials'}, 401)
 
 # route to get all meditations in db
 class Meditations(Resource):

@@ -19,7 +19,8 @@ app = Flask(__name__)
 CORS(app)
 bcrypt = Bcrypt(app)
 
-app.secret_key = b'\x9c\x8a\xc3\xdd\xce\x9e\xb9\x99\xdb!8"w\xd5~\xde'
+# app.secret_key = b'\x9c\x8a\xc3\xdd\xce\x9e\xb9\x99\xdb!8"w\xd5~\xde'
+app.secret_key = os.urandom(24)
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get(
@@ -29,9 +30,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
+# added this
+db = SQLAlchemy(app)
+
 migrate = Migrate(app, db)
 
-db.init_app(app)
+# db.init_app(app)
 
 api = Api(app)
 

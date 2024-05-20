@@ -29,17 +29,6 @@ def create_meditations():
     # Commit the changes to the database
     db.session.commit()
     
-# def create_users(num_users):
-#     users = []
-#     for _ in range(num_users):
-#         username = fake.email()
-#         password = fake.password()
-#         user = User(username=username)
-#         user.password_hash = password
-#         users.append(user)
-#     db.session.add_all(users)
-#     db.session.commit()
-
 def seed_users(num_users=3):
     fake = Faker()
     with app.app_context():
@@ -54,6 +43,8 @@ def seed_users(num_users=3):
         db.session.add_all(users)
         db.session.commit()
         print(f"{num_users} fake users created!")
+        
+        
 
 if __name__ == '__main__':
     with app.app_context():
@@ -61,3 +52,4 @@ if __name__ == '__main__':
         db.create_all()
         seed_users()
         create_meditations()
+        

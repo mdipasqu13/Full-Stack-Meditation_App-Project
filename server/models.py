@@ -17,10 +17,18 @@ class User(db.Model):
     _password_hash = db.Column(db.String(60), nullable=False)
 
     def set_password(self, password):
-        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+        self._password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def check_password(self, password):
-        return bcrypt.check_password_hash(self.password, password)
+        return bcrypt.check_password_hash(self._password_hash, password)
+    
+    @validates('username')
+    def validate_username(self, key, username):
+        if not username:
+            raise ValueError("Username cannot be empty")
+        if len(username) < 4:
+            raise ValueError("Username must be at least 4 characters long")
+        return username
     
 # relationships here
     sessions = db.relationship('Session', back_populates='user')

@@ -1,0 +1,31 @@
+.meditations-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .meditations-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 200px; /* Adjust this value to create more space between cards */
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .meditation-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: black; /* Change text color to black */
+  }
+  
+  .meditation-card h2,
+  .meditation-card p {
+    color: black; /* Ensure all text within the card is black */
+  }
+  
+  

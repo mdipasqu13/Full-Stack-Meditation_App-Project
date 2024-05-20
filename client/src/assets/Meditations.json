@@ -3,63 +3,63 @@
     "title": "Guided Sleep Meditation",
     "description": "Relaxing guided meditation to help you fall asleep",
     "duration": "20 minutes",
-    "audio_url": "client/src/assets/Guided 20 Minute Sleep Meditation.mp3"
+    "audio_url": "/GuidedSleepMeditation.mp3"
     },
 
     {
     "title": "Morning Affirmations",
     "description": "Guided morning affirmations to start your day",
     "duration": "5 minutes",
-    "audio_url": "client/src/assets/5 Minute Miracle Morning Affirmations  Listen Everyday to Attract Miracles.mp3"
+    "audio_url": "/MorningAffirmations.mp3"
     },
     {
      "title": "Singing bowl meditation",
     "description": "Connect with and heal your inner spirit",
     "duration": "10 minutes",
-    "audio_url": "client/src/assets/Connect with Your Spirit_ 10 Minute Tibetan Singing Bowls Meditation  Sound Healing For Relaxation.mp3"
+    "audio_url": "/SingingBowlMeditationShort.mp3"
     },
 
     {
     "title": "Singing bowl meditation",
     "description": "Connect with and heal your inner spirit",
     "duration": "20 minutes",
-    "audio_url": "client/src/assets/20 MINUTES Deep Relaxing Tibetan Singing Bowls  Music for Relaxation  Singing Bowl Meditation.mp3"
+    "audio_url": "/SingingBowlMeditationLong.mp3"
     },
     {
     "title": "Vipassana Meditation",
     "description": "Guided Vipassana Meditation for Beginners",
     "duration": "20 minutes",
-    "audio_url": "client/src/assets/20-Minute Guided Vipassana Meditation for Beginners_ Discover Inner Peace and Mindfulness.mp3"
+    "audio_url": "/VipassanaMeditation.mp3"
     },
     {
     "title": "Calm Meditation",
     "description": "Guided Meditation for Inner Stillness",
     "duration": "20 minutes",
-    "audio_url": "client/src/assets/20 Minute Guided Meditation for Inner Stillness.mp3"
+    "audio_url": "/CalmMeditation.mp3"
     },
     {
     "title": "Self Empowerment Meditation",
     "description": "Powerful Twenty Minute Guided Meditation",
     "duration": "20 minutes",
-    "audio_url": "client/src/assets/A Powerful 20 Minute Guided Meditation.mp3"
+    "audio_url": "/SelfEmpowermentMeditation.mp3"
     },
     {
     "title": "Journey Meditation",
     "description": "Guided Journey Within for Inner Peace",
     "duration": "10 minutes",
-    "audio_url": "client/src/assets/A 10-Minute Journey to Inner Peace  Guided Meditation.mp3"
+    "audio_url": "/JourneyMeditation.mp3"
     },
     {
     "title": "Mindfulness Meditation",
     "description": "Guided Mindfulness Meditation",
     "duration": "10 minutes",
-    "audio_url": "client/src/assets/Mindfulness Meditation - Guided 10 Minutes.mp3"
+    "audio_url": "/MindfulnessMeditation.mp3"
     },
     {
     "title": "Quick Meditation to Ground Your Day",
     "description": "Short guided meditation you can do anywhere!",
     "duration": "5 minutes",
-    "audio_url": "client/src/assets/5-Minute Meditation You Can Do Anywhere.mp3"
+    "audio_url": "/QuickMeditation.mp3"
     }
 ]
 

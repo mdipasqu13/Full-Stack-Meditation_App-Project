@@ -5,7 +5,7 @@ import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import SignIn from './pages/SignIn';
-// import Meditations from './pages/Meditations';
+import Meditations from './pages/Meditations';
 // import Calendar from './pages/Calendar';
 
 function App() {
@@ -43,6 +43,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile user={user} updateUser={updateUser} />} />
           <Route path="/signin" element={<SignIn updateUser={updateUser} />} />
+          <Route path="/meditations" element={<Meditations />} />
         </Routes>
       </div>
     </>
