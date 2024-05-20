@@ -6,6 +6,7 @@ from models import db, User, Meditation, Session, Category, MeditationCategory
 import json
 from os.path import join, dirname
 
+fake = Faker()
 
 
 def create_meditations():
