@@ -1,18 +1,25 @@
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
-from sqlalchemy import DateTime
-
-
+from sqlalchemy import DateTime, func
 
 from config import db, bcrypt
 
-class User(db.Model, SerializerMixin):
-    __tablename__ = 'users'
+db = SQLAlchemy()
+# bcrypt = Bcrypt()
+
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, nullable =False)
-    _password_hash = db.Column(db.String, nullable=False)
+    username = db.Column(db.String(20), nullable=False, unique=True)
+    password = db.Column(db.String(60), nullable=False)
+
+    def set_password(self, password):
+        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.password, password)
     
 # relationships here
     sessions = db.relationship('Session', back_populates='user')
@@ -46,10 +53,10 @@ class User(db.Model, SerializerMixin):
 class Meditation(db.Model, SerializerMixin):
     __tablename__ = 'meditations'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String)
-    description = db.Column(db.String)
-    duration = db.Column(db.String)
-    audio_url = db.Column(db.String)
+    title = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=True)
+    duration = db.Column(db.String, nullable=False)
+    audio_url = db.Column(db.String, nullable=False)
     
     # relationships here
     sessions = db.relationship('Session', back_populates='meditation')
@@ -86,8 +93,8 @@ class Session(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     meditation_id = db.Column(db.Integer, db.ForeignKey('meditations.id'), nullable=False)
-    journal_entry = db.Column(db.String)
-    created_at = db.Column(db.DateTime)
+    journal_entry = db.Column(db.String, nullable=True)
+    created_at = db.Column(db.DateTime, default=func.now())
     # created_at = db.Column(DateTime, default=func.now()) unsure of proper syntax?
     # I think db.Integer is correct? This is the time stamp for the calendar. 
     
@@ -99,7 +106,7 @@ class Session(db.Model, SerializerMixin):
 class Category(db.Model, SerializerMixin):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    name = db.Column(db.String, nullable=False, unique=True)
     
     # relationships here
     meditation_categories = db.relationship('MeditationCategory', back_populates='category')

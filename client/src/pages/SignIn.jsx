@@ -1,7 +1,8 @@
 // Importing React library to use JSX and React features
 import React from 'react';
 // Importing the LoginSignup component from the components directory
-import LoginSignup from '../components/LoginSignup';
+// import LoginSignup from '../components/LoginSignup';
+import SignUpForm from './SignUpForm';
 
 // SignIn functional component that takes updateUser function as a prop
 function SignIn({updateUser}) {
@@ -11,7 +12,7 @@ function SignIn({updateUser}) {
     <div>
       {/* LoginSignup component which handles user login or signup
           It receives updateUser as a prop to update the user state in the parent component */}
-      <LoginSignup updateUser={updateUser}/>
+      <SignUpForm updateUser={updateUser}/>
     </div>
   );
 }

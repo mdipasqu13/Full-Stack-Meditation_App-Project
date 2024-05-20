@@ -7,27 +7,37 @@ import json
 from os.path import join, dirname
 
 
-# if __name__ == '__main__':
-#     fake = Faker()
-#     with app.app_context():
-#         print("Starting seed...")
-#         # Seed code goes here!
 
-# def seed_users(num_users=3):
-#     fake = Faker()
-#     with app.app_context():
-#         print("Seeding users...")
-#         for _ in range(num_users):
-#             username = fake.user_name()
-#             password = 'password123'  # Replace with your desired default password
-#             user = User(username=username)
-#             user.password_hash = password
-#             db.session.add(user)
-#         db.session.commit()
-#         print(f"{num_users} fake users created!")
+def create_meditations():
+    file_path = join(dirname(__file__), 'client/src/assets/Meditations.json')
+    
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+        
+    for meditation_data in data:
+        meditation = Meditation(
+            meditation_name=meditation_data['title'],
+            description=meditation_data['description'],
+            audio=meditation_data['audio_url'],
+            duration=meditation_data['duration'],
+            # image=meditation_data['image']
+        )
+        
+        db.session.add(meditation)
 
-# if __name__ == '__main__':
-#     seed_users()
+    # Commit the changes to the database
+    db.session.commit()
+    
+def create_users(num_users):
+    users = []
+    for _ in range(num_users):
+        username = fake.email()
+        password = fake.password()
+        user = User(username=username)
+        user.password_hash = password
+        users.append(user)
+    db.session.add_all(users)
+    db.session.commit()
 
 def seed_users(num_users=3):
     fake = Faker()
@@ -49,3 +59,4 @@ if __name__ == '__main__':
         db.drop_all()
         db.create_all()
         seed_users()
+        create_meditations()
