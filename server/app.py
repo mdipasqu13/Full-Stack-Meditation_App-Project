@@ -13,7 +13,7 @@ def register():
     password = request.form.get('password')
 
     user = User(username=username)
-    user.set_password(password)
+    user.password_hash = password
 
     db.session.add(user)
     db.session.commit()

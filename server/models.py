@@ -7,13 +7,14 @@ from sqlalchemy import DateTime, func
 
 from config import db, bcrypt
 
-db = SQLAlchemy()
+# db = SQLAlchemy()
 # bcrypt = Bcrypt()
 
 class User(db.Model):
+    __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
-    password = db.Column(db.String(60), nullable=False)
+    _password_hash = db.Column(db.String(60), nullable=False)
 
     def set_password(self, password):
         self.password = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -53,7 +54,7 @@ class User(db.Model):
 class Meditation(db.Model, SerializerMixin):
     __tablename__ = 'meditations'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, nullable=False)
+    meditation_name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=True)
     duration = db.Column(db.String, nullable=False)
     audio_url = db.Column(db.String, nullable=False)

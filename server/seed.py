@@ -10,7 +10,7 @@ fake = Faker()
 
 
 def create_meditations():
-    file_path = join(dirname(__file__), 'client/src/assets/Meditations.json')
+    file_path = join(dirname(__file__), '../client/src/assets/Meditations.json')
     
     with open(file_path, 'r') as file:
         data = json.load(file)
@@ -19,7 +19,7 @@ def create_meditations():
         meditation = Meditation(
             meditation_name=meditation_data['title'],
             description=meditation_data['description'],
-            audio=meditation_data['audio_url'],
+            audio_url=meditation_data['audio_url'],
             duration=meditation_data['duration'],
             # image=meditation_data['image']
         )
@@ -29,16 +29,16 @@ def create_meditations():
     # Commit the changes to the database
     db.session.commit()
     
-def create_users(num_users):
-    users = []
-    for _ in range(num_users):
-        username = fake.email()
-        password = fake.password()
-        user = User(username=username)
-        user.password_hash = password
-        users.append(user)
-    db.session.add_all(users)
-    db.session.commit()
+# def create_users(num_users):
+#     users = []
+#     for _ in range(num_users):
+#         username = fake.email()
+#         password = fake.password()
+#         user = User(username=username)
+#         user.password_hash = password
+#         users.append(user)
+#     db.session.add_all(users)
+#     db.session.commit()
 
 def seed_users(num_users=3):
     fake = Faker()
