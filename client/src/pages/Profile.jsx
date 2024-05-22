@@ -10,7 +10,7 @@ function Profile({ user, updateUser }) {
   const handleDeleteUser = () => {
     const confirmed = window.confirm("Are you sure you want to delete your profile?"); //display popup prompt to confirm delete profile
     if (confirmed) {
-      fetch(`http://localhost:8080/users/${user.id}`, {
+      fetch(`http://localhost:5555/users/${user.id}`, {
         method: 'DELETE',
      })
         .then((res) => {

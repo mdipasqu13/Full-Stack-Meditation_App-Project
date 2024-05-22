@@ -37,8 +37,9 @@ function App() {
 
   return (
     <>
-      <NavBar />
       <div className="app">
+      <NavBar />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile user={user} updateUser={updateUser} />} />

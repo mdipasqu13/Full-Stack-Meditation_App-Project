@@ -23,23 +23,17 @@ def update_session(id):
         db.session.rollback()
         return make_response({'error': str(e)}, 400)
 
-# routes for login and user authentication 
-@app.route('/register', methods=['POST'])
-def register():
-    username = request.form.get('username')
-    password = request.form.get('password')
-    
-    if not username or not password:
-        return make_response({'error': "Username and password are required"}, 400)
-
-    user = User(username=username)
-    user.password_hash = password
-
-    db.session.add(user)
-    db.session.commit()
-
-    # return 'User registered successfully'
-    return jsonify({'message': 'User registered successfully'}), 201
+@app.route('/users', methods=['POST']) #sign up route
+def manage_users():
+        data = request.json
+        new_user = User(username=data.get('username')) #create new user instance 
+        new_user.password_hash = data.get('password')  # Set the password_hash using the setter
+        db.session.add(new_user)
+        db.session.commit()
+        session['user_id'] = new_user.id #set session hash to user id to keep logged in
+        response = make_response(new_user.to_dict())
+        response.set_cookie('user_id', str(new_user.id))
+        return response, 201
 
 @app.route('/logout', methods=["GET"])
 def logout():
@@ -59,24 +53,16 @@ def authorize():
 
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.form.get('username')
-    password = request.form.get('password')
-
-    user = User.query.filter_by(username=username).first()
-
-    # if user and user.check_password(password):
-    #     # Authentication successful
-    #     return 'Login successful'
-    # else:
-    #     # Authentication failed
-    #     return 'Invalid credentials'
-    if user and user.check_password(password):
-        session['user_id'] = user.id
-        response = make_response({'message': 'Login successful'}, 200)
+    data = request.get_json()
+    user = User.query.filter_by(username=data.get('username')).first() #check to see if username exists in db
+    password = data.get('password') 
+    if user and user.authenticate(password): #check entered password against encrypted password in db 
+        session['user_id'] = user.id 
+        response = make_response(user.to_dict())
         response.set_cookie('user_id', str(user.id))
-        return response
-    else:
-        return make_response({'error': 'Invalid credentials'}, 401)
+        return response, 200
+    return jsonify({'message': 'Invalid username or password'}), 401
+
 
 # route to get all meditations in db
 class Meditations(Resource):
@@ -235,5 +221,6 @@ class MeditationCategories(Resource):
 api.add_resource(MeditationCategories, '/meditation_categories')
         
         
-
+if __name__ == '__main__':
+    app.run(port=5555, debug=True)
 

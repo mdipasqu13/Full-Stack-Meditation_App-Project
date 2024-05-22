@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -32,7 +33,7 @@ const LoginSignup = ({updateUser, user}) => {
   // Function to handle form submission
   const handleSubmit = (values) => {
     // Determine the URL based on whether the user is signing up or logging in
-    const url = isSignup ? 'http://localhost:5173/users' : 'http://localhost:5173/login';
+    const url = isSignup ? 'http://localhost:5555/users' : 'http://localhost:5555/login';
     fetch(url, {
         method: 'POST',
         headers: {

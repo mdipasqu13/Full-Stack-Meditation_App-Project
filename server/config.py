@@ -16,7 +16,7 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 bcrypt = Bcrypt(app)
 
 # app.secret_key = b'\x9c\x8a\xc3\xdd\xce\x9e\xb9\x99\xdb!8"w\xd5~\xde'
@@ -31,11 +31,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
 # added this
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)
 
-# db.init_app(app)
+db.init_app(app)
 
 api = Api(app)
 
