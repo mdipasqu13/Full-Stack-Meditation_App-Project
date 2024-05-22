@@ -10,7 +10,7 @@ from config import db, bcrypt
 # db = SQLAlchemy()
 # bcrypt = Bcrypt()
 
-class User(db.Model):
+class User(db.Model, SerializerMixin):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
