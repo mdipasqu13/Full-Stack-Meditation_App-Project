@@ -8,25 +8,24 @@ const NavBar = ({user, updateUser}) => {
 
 const navigate = useNavigate()
 
+// const handleLogout = () => {
+//   // Fetch call to logout endpoint
+//   fetch('http://localhost:5555/logout')
+//     .then(res => res.json())
+//     .then(data => updateUser(null)) // Update user state to null after logout
+//     navigate('/signin', { relative: 'path' }); // Navigate to signin page after logout
+// }
+
 const handleLogout = () => {
-  // Fetch call to logout endpoint
-  fetch('http://localhost:5555/logout')
-    .then(res => res.json())
-    .then(data => updateUser(null)) // Update user state to null after logout
-    navigate('/signin', { relative: 'path' }); // Navigate to signin page after logout
-}
-{user ? (
-  <button onClick={handleLogout} className="navbar-link">
-    Logout
-  </button>
-) : (
-  <NavLink
-    to="/signin"
-    className={({ isActive }) => (isActive ? 'navbar-link active' : 'navbar-link')}
-  >
-    Sign In
-  </NavLink>
-)}
+    fetch('http://localhost:5555/logout')
+      .then(res => res.json())
+      .then(() => {
+        updateUser(null);
+        localStorage.removeItem('user');
+        navigate('/signin', { relative: 'path' });
+      });
+  };
+
 return (
   <nav className="navbar">
     <div className="navbar-container">
@@ -65,25 +64,25 @@ return (
             >
               Calendar
             </NavLink>
-            <NavLink
-              to="/signin"
-              className={({ isActive }) => (isActive ? 'navbar-link active' : 'navbar-link')}
-            >
-              Sign In
-            </NavLink>
-            
+            <button onClick={handleLogout} className="navbar-link">
+              Logout
+            </button>
           </>
-        ) : null}
-        <NavLink
-          to="/signin"
-          className={({ isActive }) => (isActive ? 'navbar-link active' : 'navbar-link')}
-        >
-          Sign In
-        </NavLink>
+        ) : (
+          <NavLink
+            to="/signin"
+            className={({ isActive }) => (isActive ? 'navbar-link active' : 'navbar-link')}
+          >
+            Sign In
+          </NavLink>
+        )}
       </div>
     </div>
   </nav>
 );
+};
+
+export default NavBar;
 
 //   return (
 //     <nav className="navbar">
@@ -131,6 +130,6 @@ return (
 //       </div>
 //     </nav>
 //   );
-};
+// };
 
-export default NavBar;
+// export default NavBar;

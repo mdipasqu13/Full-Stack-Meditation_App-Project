@@ -55,7 +55,7 @@ def authorize():
 def login():
     data = request.get_json()
     user = User.query.filter_by(username=data.get('username')).first() #check to see if username exists in db
-    password = data.get('password') 
+    password = data.get('password')
     if user and user.authenticate(password): #check entered password against encrypted password in db 
         session['user_id'] = user.id 
         response = make_response(user.to_dict())

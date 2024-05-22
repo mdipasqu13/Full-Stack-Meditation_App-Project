@@ -54,12 +54,20 @@ const LoginSignup = ({updateUser, user}) => {
     .then(data => {
         updateUser(data) // Update user state with response data
         console.log('Success:', data);
+        localStorage.setItem('user', JSON.stringify(data));  // Store user in local storage
         navigate('/', { relative: 'path' }); // Navigate to home page on successful login/signup
     })
     .catch((error) => {
         console.error('Error:', error);
     });
   };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      updateUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   return (
     <>
@@ -77,7 +85,7 @@ const LoginSignup = ({updateUser, user}) => {
         validationSchema={isSignup ? SignupSchema : LoginSchema} // Choose the correct validation schema
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting, errors, touched }) => (
+        {({ isSubmitting }) => (
     <Form>
         <div className="input">
             <Field name="email" type="email" placeholder="Email" />
