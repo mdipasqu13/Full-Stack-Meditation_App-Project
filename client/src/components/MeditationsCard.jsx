@@ -1,8 +1,25 @@
 import React from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
+import axios from 'axios';
 
-const MeditationsCard = ({ meditation }) => {
+const MeditationsCard = ({ meditation, user }) => {
+  const handlePlay = async () => {
+    try {
+      console.log(meditation.id, user.id);
+      const response = await axios.post('http://localhost:5555/sessions', {
+        user_id: user.id,
+        meditation_id: meditation.id,
+        // created_at: new Date().toISOString(),
+      });
+      console.log('Session created:', response.data);
+    } catch (error) {
+      console.error('Error creating session:', error);
+    }
+  };
+  if (!user) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="meditation-card">
       <h2>{meditation.title}</h2>
@@ -10,7 +27,8 @@ const MeditationsCard = ({ meditation }) => {
       <p>Duration: {meditation.duration}</p>
       <AudioPlayer
         src={meditation.audio_url}
-        onPlay={e => console.log("Playing")}
+        // onPlay={e => console.log("Playing")}
+        onPlay={handlePlay}
       />
     </div>
   );

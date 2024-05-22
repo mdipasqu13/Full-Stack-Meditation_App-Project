@@ -6,6 +6,28 @@ from sqlalchemy import desc
 
 from config import app, db, api
 
+# added this route for creating new sessions, not sure about it
+@app.route('/sessions', methods=['POST'])
+def create_session():
+    # if 'user_id' not in session:
+    #     return make_response({'error': 'Unauthorized'}, 403)
+    
+    data = request.get_json()
+    new_session = Session(
+        user_id=data['user_id'],
+        meditation_id=data['meditation_id'],
+        # created_at=data['created_at']
+    )
+    try:
+        db.session.add(new_session)
+        db.session.commit()
+        return make_response(new_session.to_dict(), 201)
+    except Exception as e:
+        app.logger.error(f'Error creating session: {e}')
+        db.session.rollback()
+        return make_response({'error': str(e)}, 400)
+
+
 # added this route for updating sessions
 @app.route('/update_session/<int:id>', methods=['PATCH'])
 def update_session(id):
@@ -120,24 +142,24 @@ class UsersById(Resource):
 
 api.add_resource(UsersById, '/users/<int:id>')
 
-class Sessions(Resource):
-    def get(self):
-        sessions = [session.to_dict() for session in Session.query.all()]
-        return make_response(sessions)
+# class Sessions(Resource):
+#     def get(self):
+#         sessions = [session.to_dict() for session in Session.query.all()]
+#         return make_response(sessions)
     
-    def post(self):
-        data = request.get_json()
-        new_session = Session(
-            user_id = data.get('user_id'),
-            meditation_id = data.get('meditation_id'),
-            journal_entry=data.get('journal_entry'),
-            created_at=data.get('created_at')
-        )
-        db.session.add(new_session)
-        db.session.commit()
-        return make_response(new_session.to_dict(), 201)
+#     def post(self):
+#         data = request.get_json()
+#         new_session = Session(
+#             user_id = data.get('user_id'),
+#             meditation_id = data.get('meditation_id'),
+#             journal_entry=data.get('journal_entry'),
+#             created_at=data.get('created_at')
+#         )
+#         db.session.add(new_session)
+#         db.session.commit()
+#         return make_response(new_session.to_dict(), 201)
     
-api.add_resource(Sessions, '/sessions')
+# api.add_resource(Sessions, '/sessions')
 
 class SessionsById(Resource):
     def get(self, id):

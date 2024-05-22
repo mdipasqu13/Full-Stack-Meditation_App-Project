@@ -44,7 +44,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile user={user} updateUser={updateUser} />} />
           <Route path="/signin" element={<SignIn updateUser={updateUser} />} />
-          <Route path="/meditations" element={<Meditations />} />
+          <Route path="/meditations" element={<Meditations user={user}/>} />
           <Route path="/calendar" element={<Calendar />} />
         </Routes>
       </div>

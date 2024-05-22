@@ -1,26 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import MeditationsCard from '../components/MeditationsCard';
-import meditationsData from '../assets/Meditations.json';
+// import meditationsData from '../assets/Meditations.json';
 import './Meditations.css';
+import axios from 'axios';
 
-const Meditations = () => {
+const Meditations = ( {user} ) => {
   const [meditations, setMeditations] = useState([]);
 
-  useEffect(() => {
-    // Simulate fetching data from a JSON file
-    setMeditations(meditationsData);
-  }, []);
 
-  return (
-    <div className="meditations-page">
-      <h1>Meditations</h1>
-      <div className="meditations-list">
-        {meditations.map((meditation, index) => (
-          <MeditationsCard key={index} meditation={meditation} />
-        ))}
-      </div>
-    </div>
-  );
+useEffect(() => {
+  const fetchMeditations = async () => {
+    try {
+      const response = await axios.get('http://localhost:5555/meditations');
+      setMeditations(response.data);
+    } catch (error) {
+      console.error('Error fetching meditations:', error);
+    }
+  };
+
+  fetchMeditations();
+}, []);
+
+
+return (
+<div>
+  {meditations.map(meditation => (
+    <MeditationsCard key={meditation.id} meditation={meditation} user={user} />
+  ))}
+</div>
+);
 };
 
 export default Meditations;
+
+
+
+
+
+
+
+
+
+
+
+

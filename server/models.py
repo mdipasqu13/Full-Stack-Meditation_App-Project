@@ -35,7 +35,8 @@ class User(db.Model, SerializerMixin):
 
 
 # serialize rules here
-
+    serialize_rules = ('-sessions.user', '-sessions.meditation')
+    
     @hybrid_property
     def password_hash(self):
         return self._password_hash
@@ -71,6 +72,7 @@ class Meditation(db.Model, SerializerMixin):
     sessions = db.relationship('Session', back_populates='meditation')
     categories = db.relationship('MeditationCategory', back_populates='meditation')
     # serialize rules here
+    serialize_rules = ('-sessions.user', '-sessions.meditation', '-categories.meditation')
     
     @validates('title')
     def validate_title(self, key, title):
@@ -97,13 +99,14 @@ class Meditation(db.Model, SerializerMixin):
             raise ValueError("Audio URL cannot be empty")
         return audio_url
     
+    
 class Session(db.Model, SerializerMixin):
     __tablename__ = 'sessions'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     meditation_id = db.Column(db.Integer, db.ForeignKey('meditations.id'), nullable=False)
     journal_entry = db.Column(db.String, nullable=True)
-    created_at = db.Column(db.DateTime, default=func.now())
+    created_at = db.Column(db.DateTime, default=func.now(), nullable=True)
     # created_at = db.Column(DateTime, default=func.now()) unsure of proper syntax?
     # I think db.Integer is correct? This is the time stamp for the calendar. 
     
@@ -111,6 +114,7 @@ class Session(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='sessions')
     meditation = db.relationship('Meditation', back_populates='sessions')
     # serialize rules here  
+    serialize_rules = ('-user.sessions', '-meditation.sessions')
     
 class Category(db.Model, SerializerMixin):
     __tablename__ = 'categories'
