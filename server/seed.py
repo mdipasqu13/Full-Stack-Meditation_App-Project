@@ -21,7 +21,7 @@ def create_meditations():
             description=meditation_data['description'],
             audio_url=meditation_data['audio_url'],
             duration=meditation_data['duration'],
-            # image=meditation_data['image']
+            image=meditation_data['image']
         )
         
         db.session.add(meditation)

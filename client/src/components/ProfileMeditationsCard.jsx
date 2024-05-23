@@ -3,7 +3,7 @@ import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import axios from 'axios';
 
-const MeditationsCard = ({ meditation, user }) => {
+const ProfileMeditationsCard = ({ meditation, user }) => {
   const handlePlay = async () => {
     try {
       console.log(meditation.id, user.id);
@@ -21,7 +21,7 @@ const MeditationsCard = ({ meditation, user }) => {
     return <div>Loading...</div>;
   }
   return (
-    <div className="meditation-card">
+    <div className="profile-meditation-card">
       <img src={meditation.image} alt={meditation.title} />
       <h2>{meditation.title}</h2>
       <p>{meditation.description}</p>
@@ -35,4 +35,4 @@ const MeditationsCard = ({ meditation, user }) => {
   );
 };
 
-export default MeditationsCard;
+export default ProfileMeditationsCard;

@@ -1,31 +1,40 @@
 .meditations-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 20px;
-  }
-  
-  .meditations-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 200px; /* Adjust this value to create more space between cards */
-    max-width: 800px;
-    width: 100%;
-  }
-  
-  .meditation-card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: black; /* Change text color to black */
-  }
-  
-  .meditation-card h2,
-  .meditation-card p {
-    color: black; /* Ensure all text within the card is black */
-  }
-  
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; 
+  padding: 20px;
+}
+
+.meditations-list {
+  display: flex;
+  flex-direction: column; /* Ensure single column layout */
+  gap: 100px; 
+  max-width: 800px;
+  width: 100%;
+}
+
+.meditation-card {
+  width: 300px; 
+  height: 400px; 
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: black;
+  margin: 20px auto; 
+  margin-top: 50px;
+  margin-bottom: 200px;
+}
+
+.meditation-card h2,
+.meditation-card p {
+  color: black; /* Ensure all text within the card is black */
+}
+
+.meditation-card img {
+  width: 100%;
+  height: 200px; /* Adjust the height as needed */
+  object-fit: cover;
+}

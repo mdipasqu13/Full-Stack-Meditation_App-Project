@@ -67,6 +67,7 @@ class Meditation(db.Model, SerializerMixin):
     description = db.Column(db.String, nullable=True)
     duration = db.Column(db.String, nullable=False)
     audio_url = db.Column(db.String, nullable=False)
+    image = db.Column(db.String, nullable=True)
     
     # relationships here
     sessions = db.relationship('Session', back_populates='meditation')

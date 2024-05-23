@@ -7,7 +7,9 @@ import getDay from 'date-fns/getDay';
 import enUS from 'date-fns/locale/en-US';
 import axios from 'axios';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-// import { localizer } from './UserCalendar'; // Import the localizer variable
+import './UserCalendar.css';
+
+
 
 const locales = {
   'en-US': enUS,

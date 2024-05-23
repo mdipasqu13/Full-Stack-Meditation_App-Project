@@ -1,0 +1,95 @@
+.rbc-calendar {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+/* Header Styles */
+.rbc-toolbar {
+  background-color: #4cadaf;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.rbc-toolbar button {
+  background-color: #4c90af;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.rbc-toolbar button:hover {
+  background-color: #54d061;
+}
+
+/* Day Header Styles */
+.rbc-header {
+  background-color: #f1f1f1;
+  color: #333;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+/* Time Slot Styles */
+.rbc-time-slot {
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 5px;
+  text-align: center;
+  color: #666;
+}
+
+/* Event Styles */
+.rbc-event {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 3px;
+  padding: 5px;
+  margin: 2px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.rbc-event:hover {
+  background-color: #45a049;
+}
+
+/* Overlapping Events */
+.rbc-event-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rbc-event-label {
+  display: none;
+}
+
+.rbc-event-content {
+  white-space: normal;
+}
+
+/* Today Highlight */
+.rbc-today {
+  background-color: #e6ffe6;
+}
+
+/* Customizing the appearance of the current time indicator */
+.rbc-current-time-indicator {
+  background-color: #ff0000;
+  height: 2px;
+}
+
+/* Customizing the appearance of the all-day events row */
+.rbc-allday-cell {
+  display: none;
+}

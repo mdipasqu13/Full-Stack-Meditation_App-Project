@@ -1,0 +1,21 @@
+.profile-meditations-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three columns layout */
+    gap: 20px;
+    justify-content: center; 
+}
+
+.profile-meditation-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 300px; /* Set a maximum width for the cards */
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+.profile-meditation-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
