@@ -54,7 +54,7 @@ const LoginSignup = ({updateUser, user}) => {
     .then(data => {
         updateUser(data) // Update user state with response data
         console.log('Success:', data);
-        localStorage.setItem('user', JSON.stringify(data));  // Store user in local storage
+        localStorage.setItem('user', JSON.stringify(data.id));  // Store user in local storage
         navigate('/', { relative: 'path' }); // Navigate to home page on successful login/signup
     })
     .catch((error) => {

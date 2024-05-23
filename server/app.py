@@ -3,19 +3,16 @@ from flask import jsonify, make_response, request, session
 from models import User, Meditation, Session, MeditationCategory, Category
 from flask_restful import  Resource
 from sqlalchemy import desc
+import ipdb
+import json
 
 from config import app, db, api
 
 @app.route('/users/<int:user_id>/sessions', methods=['GET'])
 def get_user_sessions(user_id):
-    sessions = Session.query.filter_by(user_id=user_id).all()
-    sessions_data = [{
-        'id': session.id,
-        'title': session.title,
-        'start_time': session.start_time.isoformat(),
-        'end_time': session.end_time.isoformat()
-    } for session in sessions]
-    return jsonify(sessions_data)
+    sessions = [session.to_dict() for session in Session.query.filter_by(user_id=user_id).all()]
+    
+    return jsonify(sessions)
 
 # added this route for creating new sessions, not sure about it
 @app.route('/sessions', methods=['POST'])
@@ -75,11 +72,13 @@ def logout():
     response.delete_cookie('user_id')
     return response, 200
 
-@app.route('/authenticate-session') #route for authentication 
+@app.route('/authenticate-session', methods=['POST']) #route for authentication 
 def authorize():
     cookie_id = request.cookies.get('user_id')  
-    if cookie_id:
-        user = User.query.filter_by(id=cookie_id).first() #check to see if cookie matches current user id
+    data = request.get_json()
+    user_id = int(data.get('currentSession'))
+    if user_id:
+        user = User.query.filter_by(id=user_id).first() #check to see if user id exists in db
         if user:
             return make_response(user.to_dict(only=['id', 'username'])), 200
     return make_response({'message': 'failed to authenticate'}), 401

@@ -14,7 +14,13 @@ function App() {
 
   // Effect hook to fetch user data on component mount
   useEffect(() => {
-    fetch('http://localhost:5173/authenticate-session')
+    fetch('http://localhost:5555/authenticate-session', {
+      method: 'POST', 
+      body: JSON.stringify({currentSession:localStorage.getItem('user')}),
+      headers: {
+        'Content-Type': 'application/json'
+      
+      }})
       .then((res) => {
         if (res.ok) {
           return res.json(); // Parse JSON data if response is OK
@@ -46,7 +52,7 @@ function App() {
           <Route path="/signin" element={<SignIn updateUser={updateUser} />} />
           <Route path="/meditations" element={<Meditations user={user}/>} />
           {/* <Route path="/calendar/:userId" element={<CalendarPage />} /> */}
-          <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/calendar" element={<CalendarPage user={user}/>} />
         </Routes>
       </div>
     </>

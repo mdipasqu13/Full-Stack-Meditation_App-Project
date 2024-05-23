@@ -23,33 +23,38 @@ const localizer = dateFnsLocalizer({
 
 
 
-const UserCalendar = ({ userId }) => {
+const UserCalendar = ({ user }) => {
     const [sessions, setSessions] = useState([]);
 
     useEffect(() => {
-        console.log('User ID:', userId);
+        console.log('User ID:', user.id);
         const fetchSessions = async () => {
             try {
-                const response = await axios.get(`http://localhost:5555/users/${userId}/sessions`);
+                const response = await axios.get(`http://localhost:5555/users/${user.id}/sessions`);
                 const sessions = response.data.map(session => ({
                         title: `Meditation Session ${session.id}`,
                         start: new Date(session.created_at),
                         end: new Date(session.created_at),
                     }));
                 setSessions(sessions);
+                console.log(sessions);
             } catch (error) {
                 console.error('Error fetching sessions:', error);
             }
         };
 
         fetchSessions();
-    }, [userId]);
+    }, []);
+
+    if (!user) {
+        return <div>Loading...</div>;
+      }
 
     return (
         <div>
             <Calendar
                 localizer={localizer} 
-                sessions={sessions}
+                events={sessions}
                 startAccessor="start"
                 endAccessor="end"
                 style={{ height: 500 }}

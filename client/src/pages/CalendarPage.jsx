@@ -2,11 +2,11 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import UserCalendar from '../components/UserCalendar';
 
-const CalendarPage = () => {
-  const { userId } = useParams();
-  console.log('CalendarPage userId:', userId);
+const CalendarPage = ({user}) => {
+  // const { userId } = useParams();
+  // console.log('CalendarPage userId:', user.id);
 
-  return <UserCalendar userId={userId} />;
+  return <UserCalendar user={user} />;
 };
 
 export default CalendarPage;
