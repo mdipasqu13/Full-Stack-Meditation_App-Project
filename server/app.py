@@ -6,6 +6,17 @@ from sqlalchemy import desc
 
 from config import app, db, api
 
+@app.route('/users/<int:user_id>/sessions', methods=['GET'])
+def get_user_sessions(user_id):
+    sessions = Session.query.filter_by(user_id=user_id).all()
+    sessions_data = [{
+        'id': session.id,
+        'title': session.title,
+        'start_time': session.start_time.isoformat(),
+        'end_time': session.end_time.isoformat()
+    } for session in sessions]
+    return jsonify(sessions_data)
+
 # added this route for creating new sessions, not sure about it
 @app.route('/sessions', methods=['POST'])
 def create_session():

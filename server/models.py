@@ -116,6 +116,15 @@ class Session(db.Model, SerializerMixin):
     # serialize rules here  
     serialize_rules = ('-user.sessions', '-meditation.sessions')
     
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'meditation_id': self.meditation_id,
+            'journal_entry': self.journal_entry,
+            'created_at': self.created_at.isoformat()
+        }
+    
 class Category(db.Model, SerializerMixin):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True)

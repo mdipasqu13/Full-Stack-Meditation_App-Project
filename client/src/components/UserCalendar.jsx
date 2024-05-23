@@ -7,6 +7,7 @@ import getDay from 'date-fns/getDay';
 import enUS from 'date-fns/locale/en-US';
 import axios from 'axios';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+// import { localizer } from './UserCalendar'; // Import the localizer variable
 
 const locales = {
   'en-US': enUS,
@@ -20,38 +21,41 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
+
+
 const UserCalendar = ({ userId }) => {
-  const [events, setEvents] = useState([]);
+    const [sessions, setSessions] = useState([]);
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await axios.get(`/api/users/${userId}/events`);
-        const events = response.data.map(event => ({
-          title: event.title,
-          start: new Date(event.start),
-          end: new Date(event.end),
-        }));
-        setEvents(events);
-      } catch (error) {
-        console.error('Error fetching events:', error);
-      }
-    };
+    useEffect(() => {
+        console.log('User ID:', userId);
+        const fetchSessions = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5555/users/${userId}/sessions`);
+                const sessions = response.data.map(session => ({
+                        title: `Meditation Session ${session.id}`,
+                        start: new Date(session.created_at),
+                        end: new Date(session.created_at),
+                    }));
+                setSessions(sessions);
+            } catch (error) {
+                console.error('Error fetching sessions:', error);
+            }
+        };
 
-    fetchEvents();
-  }, [userId]);
+        fetchSessions();
+    }, [userId]);
 
-  return (
-    <div>
-      <Calendar
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 500 }}
-      />
-    </div>
-  );
+    return (
+        <div>
+            <Calendar
+                localizer={localizer} 
+                sessions={sessions}
+                startAccessor="start"
+                endAccessor="end"
+                style={{ height: 500 }}
+            />
+        </div>
+    );
 };
 
 export default UserCalendar;

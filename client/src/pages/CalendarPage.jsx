@@ -4,6 +4,7 @@ import UserCalendar from '../components/UserCalendar';
 
 const CalendarPage = () => {
   const { userId } = useParams();
+  console.log('CalendarPage userId:', userId);
 
   return <UserCalendar userId={userId} />;
 };
