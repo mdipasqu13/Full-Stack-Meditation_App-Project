@@ -4,7 +4,6 @@ import axios from 'axios';
 import ProfileMeditationsCard from '../components/ProfileMeditationsCard';
 import './Profile.css';
 
-// Define the Profile functional component with 'user' as a prop
 function Profile({ user, updateUser }) {
   const [recentMeditations, setRecentMeditations] = useState([]);
   const navigate = useNavigate();
@@ -25,35 +24,40 @@ function Profile({ user, updateUser }) {
       }
     };
 
-    fetchRecentMeditations();
-  }, [user.id]);
+    if (user?.id) {
+      fetchRecentMeditations();
+    }
+  }, [user?.id]);
+
 
   const handleDeleteUser = () => {
-    const confirmed = window.confirm("Are you sure you want to delete your profile?");
+    const confirmed = window.confirm("Are you sure you want to delete your profile?"); //display popup prompt to confirm delete profile
     if (confirmed) {
       fetch(`http://localhost:5555/users/${user.id}`, {
         method: 'DELETE',
-      })
+     })
         .then((res) => {
-          if (res.ok) {
+         if (res.ok) {
             console.log('User deleted successfully');
-            fetch('http://localhost:5173/logout')
-              .then(res => res.json())
-              .then(data => updateUser(null)); // Update user state to null after logout
-            navigate('/signin', { relative: 'path' }); // Navigate to signin page after logout
+            fetch('http://localhost:5555/logout')
+		          .then(res => res.json())
+		          .then(data => updateUser(null)) // Update user state to null after logout
+                navigate('/signin', { relative: 'path' }); // Navigate to signin page after logout
           } else {
             console.error('Failed to delete user');
           }
         })
         .catch((error) => console.error('Error deleting user:', error));
-    }
-  };
+    };
+  }
+
+  if (!user) {
+    return null; 
+  }
 
   return (
     <div>
       <h1>My Profile</h1>
-      
-      <button onClick={handleDeleteUser}>Delete Profile</button>
       <h2>My Recent Meditations</h2>
       <div className="profile-meditations-list">
         {recentMeditations.map(meditation => (
@@ -61,8 +65,28 @@ function Profile({ user, updateUser }) {
           
         ))}
       </div>
+      <button className="delete-button" onClick={handleDeleteUser}>Delete Profile</button>
     </div>
   );
 }
 
 export default Profile;
+
+// return (
+//   <div>
+//     <h1>My Profile</h1>
+    
+//     <button onClick={handleDeleteUser}>Delete Profile</button>
+//     <h2>My Recent Meditations</h2>
+//     <div className="meditations-list">
+//       {recentMeditations.length > 0 && (
+//         <ProfileMeditationsCard key={recentMeditations[currentIndex].id} meditation={recentMeditations[currentIndex]} user={user} />
+//       )}
+//       <div className="carousel-controls" style={{ display: 'flex', justifyContent: 'center' }}>
+//         <button onClick={handlePrev}>Previous</button>
+//         <button onClick={handleNext}>Next</button>
+//       </div>
+//     </div>
+//   </div>
+// );
+// }

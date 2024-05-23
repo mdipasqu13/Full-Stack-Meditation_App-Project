@@ -8,6 +8,19 @@ import json
 
 from config import app, db, api
 
+# @app.route('/users/<int:id>', methods=['DELETE'])
+# def delete_user(id):
+#     try:
+#         user = User.query.get(id)
+#         if not user:
+#             return jsonify({"error": "User not found"}), 404
+#         db.session.delete(user)
+#         db.session.commit()
+#         return '', 204
+#     except Exception as e:
+#         app.logger.error(f'Error deleting user: {e}')
+#         return jsonify({"error": "An error occurred while deleting the user"}), 500
+
 @app.route('/users/<int:user_id>/sessions', methods=['GET'])
 def get_user_sessions(user_id):
     sessions = [session.to_dict() for session in Session.query.filter_by(user_id=user_id).all()]
@@ -118,7 +131,7 @@ api.add_resource(MeditationsById, '/meditations/<int:id>')
 #route to access user info and delete user 
 class UsersById(Resource):
     def get(self, id):
-        user = User.query.filter(User.id==id).first()
+        user = User.query.filter(User.id == id).first()
         if user:
             return make_response(user.to_dict())
         else:
@@ -137,39 +150,24 @@ class UsersById(Resource):
                 db.session.commit()
 
                 return make_response(user.to_dict(), 202)
-            except:
+            except Exception as e:
+                app.logger.error(f'Error updating user: {e}')
                 return make_response({"errors": ["validation errors"]}, 400)
            
     def delete(self, id):
-        user = User.query.filter(User.id == id).first()
-        if not user:
-            return make_response({"error": "User not found"}, 404)
-        else:
+        try:
+            user = User.query.filter(User.id == id).first()
+            if not user:
+                return make_response({"error": "User not found"}, 404)
             db.session.delete(user)
             db.session.commit()
-
             return make_response({}, 204)
+        except Exception as e:
+            app.logger.error(f'Error deleting user: {e}')
+            return make_response({"error": "An error occurred while deleting the user"}, 500)
 
 api.add_resource(UsersById, '/users/<int:id>')
 
-# class Sessions(Resource):
-#     def get(self):
-#         sessions = [session.to_dict() for session in Session.query.all()]
-#         return make_response(sessions)
-    
-#     def post(self):
-#         data = request.get_json()
-#         new_session = Session(
-#             user_id = data.get('user_id'),
-#             meditation_id = data.get('meditation_id'),
-#             journal_entry=data.get('journal_entry'),
-#             created_at=data.get('created_at')
-#         )
-#         db.session.add(new_session)
-#         db.session.commit()
-#         return make_response(new_session.to_dict(), 201)
-    
-# api.add_resource(Sessions, '/sessions')
 
 class SessionsById(Resource):
     def get(self, id):

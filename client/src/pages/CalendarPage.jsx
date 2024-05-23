@@ -6,7 +6,7 @@ const CalendarPage = ({user}) => {
   // const { userId } = useParams();
   // console.log('CalendarPage userId:', user.id);
 
-  return <UserCalendar user={user} />;
+  return user ? <UserCalendar user={user} /> : null;
 };
 
 export default CalendarPage;
