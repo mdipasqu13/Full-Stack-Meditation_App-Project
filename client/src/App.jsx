@@ -7,6 +7,7 @@ import Profile from './pages/Profile';
 import SignIn from './pages/SignIn';
 import Meditations from './pages/Meditations';
 import CalendarPage from './pages/CalendarPage';
+import JournalPage from './pages/JournalPage';
 
 function App() {
   // State hook to manage user state
@@ -53,6 +54,7 @@ function App() {
           <Route path="/meditations" element={<Meditations user={user}/>} />
           {/* <Route path="/calendar/:userId" element={<CalendarPage />} /> */}
           <Route path="/calendar" element={<CalendarPage user={user}/>} />
+          <Route path="/journal" element={<JournalPage user={user} />} />
         </Routes>
       </div>
     </>

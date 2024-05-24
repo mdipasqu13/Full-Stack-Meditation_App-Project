@@ -21,6 +21,15 @@ from config import app, db, api
 #         app.logger.error(f'Error deleting user: {e}')
 #         return jsonify({"error": "An error occurred while deleting the user"}), 500
 
+# @app.route('/users/<int:user_id>/sessions/<int:session_id>/journal_entries', methods=['GET'])
+# def get_journal_entries(user_id, session_id):
+#     session_entries = Session.query.filter_by(user_id=user_id, id=session_id).all()
+#     if not session_entries:
+#         return jsonify({"error": "No journal entries found"}), 404
+    
+#     journal_entries = [entry.to_dict() for entry in session_entries]
+#     return jsonify(journal_entries), 200
+
 @app.route('/users/<int:user_id>/sessions', methods=['GET'])
 def get_user_sessions(user_id):
     sessions = [session.to_dict() for session in Session.query.filter_by(user_id=user_id).all()]
