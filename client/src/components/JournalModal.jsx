@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const JournalModal = ({ event, onClose, onSave, onDelete }) => {
   const [journalEntry, setJournalEntry] = useState(event.journal_entry || '');
+
+  useEffect(() => {
+    setJournalEntry(event.journal_entry || '');
+  }, [event]);
 
   const handleSave = async () => {
     try {
@@ -42,9 +46,11 @@ const JournalModal = ({ event, onClose, onSave, onDelete }) => {
           value={journalEntry}
           onChange={(e) => setJournalEntry(e.target.value)}
         />
-        <button onClick={handleSave}>Save</button>
-        <button onClick={handleDelete}>Delete</button>
-        <button onClick={onClose}>Close</button>
+        <div className="button-container">
+          <button onClick={handleSave}>Save</button>
+          <button onClick={handleDelete}>Delete</button>
+          <button onClick={onClose}>Close</button>
+        </div>
       </div>
     </div>
   );

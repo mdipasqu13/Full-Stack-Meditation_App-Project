@@ -93,3 +93,42 @@
 .rbc-allday-cell {
   display: none;
 }
+
+.calendar-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.calendar {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.journal-modal {
+  flex: 0 0 300px; /* Adjust the width as needed */
+}
+
+.modal-content {
+  padding: 20px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.button-container button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.button-container button:hover {
+  background-color: #ddd;
+}

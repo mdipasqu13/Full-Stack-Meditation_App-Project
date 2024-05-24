@@ -33,7 +33,7 @@ const UserCalendar = ({ user }) => {
             try {
                 const response = await axios.get(`http://localhost:5555/users/${user.id}/sessions`);
                 const sessions = response.data.map(session => ({
-                        id: session.id, // Ensure the id is included
+                        id: session.id,
                         title: `Meditation Session ${session.id}`,
                         start: new Date(session.created_at),
                         end: new Date(session.created_at),
@@ -70,22 +70,27 @@ const UserCalendar = ({ user }) => {
     }
 
     return (
-        <div>
-            <Calendar
-                localizer={localizer} 
-                events={sessions}
-                startAccessor="start"
-                endAccessor="end"
-                style={{ height: 500 }}
-                onSelectEvent={handleEventClick}
-            />
-            {isModalOpen && (
-                <JournalModal
-                    event={selectedEvent}
-                    onClose={() => setIsModalOpen(false)}
-                    onSave={handleSave}
-                    onDelete={handleDelete}
+        <div className="calendar-container">
+            <div className="calendar">
+                <Calendar
+                    localizer={localizer} 
+                    events={sessions}
+                    startAccessor="start"
+                    endAccessor="end"
+                    style={{ height: 500 }}
+                    onSelectEvent={handleEventClick}
                 />
+            </div>
+            {isModalOpen && selectedEvent && (
+                <div className="journal-modal">
+                    <JournalModal
+                        key={selectedEvent.id} // Use the event ID as the key
+                        event={selectedEvent}
+                        onClose={() => setIsModalOpen(false)}
+                        onSave={handleSave}
+                        onDelete={handleDelete}
+                    />
+                </div>
             )}
         </div>
     );
