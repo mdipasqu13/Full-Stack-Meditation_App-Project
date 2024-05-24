@@ -3,6 +3,7 @@
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",
     "react-big-calendar": "^1.12.2",
+    "react-calendar": "^5.0.0",
     "react-h5-audio-player": "^3.9.1"
   }
 }

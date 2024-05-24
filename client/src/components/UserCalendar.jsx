@@ -8,8 +8,7 @@ import enUS from 'date-fns/locale/en-US';
 import axios from 'axios';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './UserCalendar.css';
-
-
+import JournalModal from './JournalModal';
 
 const locales = {
   'en-US': enUS,
@@ -23,10 +22,10 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-
-
 const UserCalendar = ({ user }) => {
     const [sessions, setSessions] = useState([]);
+    const [selectedEvent, setSelectedEvent] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         console.log('User ID:', user.id);
@@ -34,9 +33,11 @@ const UserCalendar = ({ user }) => {
             try {
                 const response = await axios.get(`http://localhost:5555/users/${user.id}/sessions`);
                 const sessions = response.data.map(session => ({
+                        id: session.id, // Ensure the id is included
                         title: `Meditation Session ${session.id}`,
                         start: new Date(session.created_at),
                         end: new Date(session.created_at),
+                        journal_entry: session.journal_entry,
                     }));
                 setSessions(sessions);
                 console.log(sessions);
@@ -46,11 +47,27 @@ const UserCalendar = ({ user }) => {
         };
 
         fetchSessions();
-    }, []);
+    }, [user.id]);
+
+    const handleEventClick = (event) => {
+        setSelectedEvent(event);
+        setIsModalOpen(true);
+        console.log(event);
+    };
+
+    const handleSave = (updatedEvent) => {
+        setSessions(sessions.map(e => e.id === updatedEvent.id ? updatedEvent : e));
+        setIsModalOpen(false);
+    };
+
+    const handleDelete = (eventId) => {
+        setSessions(sessions.filter(e => e.id !== eventId));
+        setIsModalOpen(false);
+    };
 
     if (!user) {
         return <div>Loading...</div>;
-      }
+    }
 
     return (
         <div>
@@ -60,7 +77,16 @@ const UserCalendar = ({ user }) => {
                 startAccessor="start"
                 endAccessor="end"
                 style={{ height: 500 }}
+                onSelectEvent={handleEventClick}
             />
+            {isModalOpen && (
+                <JournalModal
+                    event={selectedEvent}
+                    onClose={() => setIsModalOpen(false)}
+                    onSave={handleSave}
+                    onDelete={handleDelete}
+                />
+            )}
         </div>
     );
 };
