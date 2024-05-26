@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import './JournalEntries.css'; 
 
 const JournalEntries = ({ user }) => {
   const [entries, setEntries] = useState([]);
@@ -80,7 +81,7 @@ const JournalEntries = ({ user }) => {
       ) : (
         <ul>
           {filteredEntries.map(entry => (
-            <li key={entry.id}>
+            <li key={entry.id} className="journal-entry-box">
               <p><strong>Date:</strong> {new Date(entry.created_at).toLocaleString()}</p>
               <p><strong>Entry:</strong> {entry.journal_entry}</p>
               {editingEntryId === entry.id ? (
