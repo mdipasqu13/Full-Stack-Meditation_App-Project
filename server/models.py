@@ -4,6 +4,8 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 from sqlalchemy import DateTime, func
+from datetime import datetime
+import pytz
 
 from config import db, bcrypt
 
@@ -118,12 +120,14 @@ class Session(db.Model, SerializerMixin):
     serialize_rules = ('-user.sessions', '-meditation.sessions')
     
     def to_dict(self):
+        eastern = pytz.timezone('America/New_York')
+        created_at_eastern = self.created_at.astimezone(eastern)
         return {
             'id': self.id,
             'user_id': self.user_id,
             'meditation_id': self.meditation_id,
             'journal_entry': self.journal_entry,
-            'created_at': self.created_at.isoformat()
+            'created_at': created_at_eastern.isoformat()
         }
     
 class Category(db.Model, SerializerMixin):

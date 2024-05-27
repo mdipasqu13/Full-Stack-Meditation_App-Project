@@ -8,6 +8,9 @@ import SignIn from './pages/SignIn';
 import Meditations from './pages/Meditations';
 import CalendarPage from './pages/CalendarPage';
 import JournalPage from './pages/JournalPage';
+import Resources from './pages/Resources';
+import About from './pages/About';
+
 
 function App() {
   // State hook to manage user state
@@ -55,6 +58,9 @@ function App() {
           {/* <Route path="/calendar/:userId" element={<CalendarPage />} /> */}
           <Route path="/calendar" element={<CalendarPage user={user}/>} />
           <Route path="/journal" element={<JournalPage user={user} />} />
+          <Route path="/resources" element={<Resources user={user} />} />
+          <Route path="/about" element={<About user={user} />} />
+
         </Routes>
       </div>
     </>

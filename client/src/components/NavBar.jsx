@@ -34,6 +34,15 @@ const NavBar = ({ user, updateUser }) => {
           >
             Home
           </NavLink>
+
+          <NavLink to="/about" className={({ isActive }) => (isActive ? 'navbar-link active' : 'navbar-link')}>
+            About
+          </NavLink>
+
+          <NavLink to="/resources" className={({ isActive }) => (isActive ? 'navbar-link active' : 'navbar-link')}>
+            Resources
+          </NavLink>
+            
           {user ? (
             <>
               <NavLink
@@ -60,6 +69,7 @@ const NavBar = ({ user, updateUser }) => {
               >
                 Journal Entries
               </NavLink>
+             
               <button onClick={handleLogout} className="navbar-link">
                 Logout
               </button>
@@ -72,6 +82,7 @@ const NavBar = ({ user, updateUser }) => {
               Sign In
             </NavLink>
           )}
+          
         </div>
       </div>
     </nav>

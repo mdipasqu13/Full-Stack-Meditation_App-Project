@@ -1,26 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
-import format from 'date-fns/format';
-import parse from 'date-fns/parse';
-import startOfWeek from 'date-fns/startOfWeek';
-import getDay from 'date-fns/getDay';
-import enUS from 'date-fns/locale/en-US';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import 'moment-timezone';
 import axios from 'axios';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './UserCalendar.css';
 import JournalModal from './JournalModal';
 
-const locales = {
-  'en-US': enUS,
-};
-
-const localizer = dateFnsLocalizer({
-  format,
-  parse,
-  startOfWeek,
-  getDay,
-  locales,
-});
+// Set up the moment localizer
+const localizer = momentLocalizer(moment);
 
 const UserCalendar = ({ user }) => {
     const [sessions, setSessions] = useState([]);
@@ -32,20 +20,27 @@ const UserCalendar = ({ user }) => {
         const fetchSessions = async () => {
             try {
                 const response = await axios.get(`http://localhost:5555/users/${user.id}/sessions`);
-                const sessions = response.data.map(session => ({
+                console.log(response);
+                const sessions = response.data.map(session => {
+                    // Format the date to Eastern Time
+                    const createdAt = moment(session.created_at).subtract(4, 'hours').toDate();
+    
+                    return {
                         id: session.id,
                         title: `Meditation Session ${session.id}`,
-                        start: new Date(session.created_at),
-                        end: new Date(session.created_at),
+                        start: createdAt,
+                        end: createdAt,
                         journal_entry: session.journal_entry,
-                    }));
+                        original_created_at: session.created_at, // Store the original created_at timestamp
+                    };
+                });
                 setSessions(sessions);
                 console.log(sessions);
             } catch (error) {
                 console.error('Error fetching sessions:', error);
             }
         };
-
+    
         fetchSessions();
     }, [user.id]);
 
@@ -73,18 +68,23 @@ const UserCalendar = ({ user }) => {
         <div className="calendar-container">
             <div className="calendar">
                 <Calendar
-                    localizer={localizer} 
+                    localizer={localizer}
                     events={sessions}
                     startAccessor="start"
                     endAccessor="end"
                     style={{ height: 500 }}
                     onSelectEvent={handleEventClick}
+                    formats={{
+                        timeGutterFormat: (date, culture, localizer) =>
+                            localizer.format(date, 'hh:mm A', culture),
+                        eventTimeRangeFormat: ({ start, end }, culture, localizer) =>
+                            `${localizer.format(start, 'hh:mm A', culture)} - ${localizer.format(end, 'hh:mm A', culture)}`,
+                    }}
                 />
             </div>
-            {isModalOpen && selectedEvent && (
+            {isModalOpen && (
                 <div className="journal-modal">
                     <JournalModal
-                        key={selectedEvent.id} // Use the event ID as the key
                         event={selectedEvent}
                         onClose={() => setIsModalOpen(false)}
                         onSave={handleSave}

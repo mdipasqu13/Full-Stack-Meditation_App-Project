@@ -29,6 +29,11 @@ from config import app, db, api
     
 #     journal_entries = [entry.to_dict() for entry in session_entries]
 #     return jsonify(journal_entries), 200
+@app.route('/users/<int:user_id>/recent_session', methods=['GET'])
+def get_recent_session(user_id):
+    sessions = [session.to_dict() for session in Session.query.filter_by(user_id=user_id).first()]
+    
+    return jsonify(sessions)
 
 @app.route('/users/<int:user_id>/sessions', methods=['GET'])
 def get_user_sessions(user_id):

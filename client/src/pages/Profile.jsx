@@ -35,6 +35,7 @@ function Profile({ user, updateUser }) {
   }, [user?.id]);
 
   const handleDeleteUser = () => {
+    console.log(user.id);
     const confirmed = window.confirm("Are you sure you want to delete your profile?");
     if (confirmed) {
       fetch(`http://localhost:5555/users/${user.id}`, {

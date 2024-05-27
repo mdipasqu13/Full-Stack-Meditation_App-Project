@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './JournalEntries.css'; 
+import moment from 'moment';
+import 'moment-timezone';
+import './JournalEntries.css';
 
 const JournalEntries = ({ user }) => {
   const [entries, setEntries] = useState([]);
@@ -61,10 +63,33 @@ const JournalEntries = ({ user }) => {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:5555/sessions/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      setEntries(entries.filter(entry => entry.id !== id));
+    } catch (error) {
+      console.error('Error deleting session:', error);
+      alert('Failed to delete session. Please try again.');
+    }
+  };
+
   const filteredEntries = entries.filter(entry => {
-    const entryDate = new Date(entry.created_at);
+    const entryDate = moment(entry.created_at).subtract(4, 'hours').toDate();
     return entryDate.toDateString() === selectedDate.toDateString();
   });
+
+  const convertToEasternTime = (dateString) => {
+    const date = moment(dateString).subtract(4, 'hours').toDate();
+    return moment(date).format('YYYY/MM/DD hh:mm A');
+  };
 
   return (
     <div>
@@ -82,7 +107,7 @@ const JournalEntries = ({ user }) => {
         <ul>
           {filteredEntries.map(entry => (
             <li key={entry.id} className="journal-entry-box">
-              <p><strong>Date:</strong> {new Date(entry.created_at).toLocaleString()}</p>
+              <p><strong>Date:</strong> {convertToEasternTime(entry.created_at)}</p>
               <p><strong>Entry:</strong> {entry.journal_entry}</p>
               {editingEntryId === entry.id ? (
                 <>
@@ -90,7 +115,10 @@ const JournalEntries = ({ user }) => {
                   <button onClick={() => handleSave(entry)}>Save</button>
                 </>
               ) : (
-                <button onClick={() => handleEdit(entry)}>Edit</button>
+                <>
+                  <button onClick={() => handleEdit(entry)}>Edit</button>
+                  <button onClick={() => handleDelete(entry.id)}>Delete</button>
+                </>
               )}
             </li>
           ))}
