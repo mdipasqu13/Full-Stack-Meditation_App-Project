@@ -7,19 +7,20 @@ const HomeMeditationsCard = ({ meditation, user }) => {
   const handlePlay = async () => {
     try {
       console.log(meditation.id, user.id);
-      const response = await axios.post('http://localhost:5555/recent_session', {
+      const response = await axios.post('http://localhost:5555/sessions', {
         user_id: user.id,
-        meditation_id: meditation.id,
-        // created_at: new Date().toISOString(),
+        meditation_id: meditation.id
       });
       console.log('Session created:', response.data);
     } catch (error) {
       console.error('Error creating session:', error);
     }
   };
+
   if (!user) {
     return <div>Loading...</div>;
   }
+
   return (
     <div className="home-meditation-card">
       <img src={meditation.image} alt={meditation.title} />
@@ -28,7 +29,6 @@ const HomeMeditationsCard = ({ meditation, user }) => {
       <p>Duration: {meditation.duration}</p>
       <AudioPlayer
         src={meditation.audio_url}
-        // onPlay={e => console.log("Playing")}
         onPlay={handlePlay}
       />
     </div>

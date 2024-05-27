@@ -8,32 +8,14 @@ import json
 
 from config import app, db, api
 
-# @app.route('/users/<int:id>', methods=['DELETE'])
-# def delete_user(id):
-#     try:
-#         user = User.query.get(id)
-#         if not user:
-#             return jsonify({"error": "User not found"}), 404
-#         db.session.delete(user)
-#         db.session.commit()
-#         return '', 204
-#     except Exception as e:
-#         app.logger.error(f'Error deleting user: {e}')
-#         return jsonify({"error": "An error occurred while deleting the user"}), 500
 
-# @app.route('/users/<int:user_id>/sessions/<int:session_id>/journal_entries', methods=['GET'])
-# def get_journal_entries(user_id, session_id):
-#     session_entries = Session.query.filter_by(user_id=user_id, id=session_id).all()
-#     if not session_entries:
-#         return jsonify({"error": "No journal entries found"}), 404
-    
-#     journal_entries = [entry.to_dict() for entry in session_entries]
-#     return jsonify(journal_entries), 200
 @app.route('/users/<int:user_id>/recent_session', methods=['GET'])
 def get_recent_session(user_id):
-    sessions = [session.to_dict() for session in Session.query.filter_by(user_id=user_id).first()]
-    
-    return jsonify(sessions)
+    session = Session.query.filter_by(user_id=user_id).order_by(Session.created_at.desc()).first()
+    if session:
+        return jsonify(session.to_dict()), 200
+    else:
+        return jsonify({"error": "No recent session found"}), 404
 
 @app.route('/users/<int:user_id>/sessions', methods=['GET'])
 def get_user_sessions(user_id):

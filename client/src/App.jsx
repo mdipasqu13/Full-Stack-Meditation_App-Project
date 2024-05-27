@@ -10,6 +10,7 @@ import CalendarPage from './pages/CalendarPage';
 import JournalPage from './pages/JournalPage';
 import Resources from './pages/Resources';
 import About from './pages/About';
+import MeditationDetail from './pages/MeditationDetail';
 
 
 function App() {
@@ -51,7 +52,7 @@ function App() {
       <NavBar user={user} updateUser={updateUser}/>
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home user={user}/>} />
           <Route path="/profile" element={<Profile user={user} updateUser={updateUser} />} />
           <Route path="/signin" element={<SignIn updateUser={updateUser} />} />
           <Route path="/meditations" element={<Meditations user={user}/>} />
@@ -60,7 +61,7 @@ function App() {
           <Route path="/journal" element={<JournalPage user={user} />} />
           <Route path="/resources" element={<Resources user={user} />} />
           <Route path="/about" element={<About user={user} />} />
-
+          <Route path="/meditations/:id" element={<MeditationDetail user={user} />} />
         </Routes>
       </div>
     </>
