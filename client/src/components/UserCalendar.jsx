@@ -12,6 +12,7 @@ const localizer = momentLocalizer(moment);
 
 const UserCalendar = ({ user }) => {
     const [sessions, setSessions] = useState([]);
+    const [streaks, setStreaks] = useState(0);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -31,10 +32,11 @@ const UserCalendar = ({ user }) => {
                         start: createdAt,
                         end: createdAt,
                         journal_entry: session.journal_entry,
-                        original_created_at: session.created_at, // Store the original created_at timestamp
+                        original_created_at: session.created_at, 
                     };
                 });
                 setSessions(sessions);
+                calculateStreaks(sessions);
                 console.log(sessions);
             } catch (error) {
                 console.error('Error fetching sessions:', error);
@@ -43,6 +45,24 @@ const UserCalendar = ({ user }) => {
     
         fetchSessions();
     }, [user.id]);
+
+    const calculateStreaks = (sessions) => {
+        // Extract unique dates from sessions
+        const uniqueDates = [...new Set(sessions.map(session => moment(session.original_created_at).format('YYYY-MM-DD')))];
+        uniqueDates.sort(); // Sort dates in ascending order
+
+        let streak = 0;
+        let maxStreak = 0;
+        for (let i = 0; i < uniqueDates.length; i++) {
+            if (i === 0 || moment(uniqueDates[i]).diff(moment(uniqueDates[i - 1]), 'days') === 1) {
+                streak++;
+            } else {
+                streak = 1;
+            }
+            maxStreak = Math.max(maxStreak, streak);
+        }
+        setStreaks(maxStreak);
+    };
 
     const handleEventClick = (event) => {
         setSelectedEvent(event);
@@ -92,6 +112,9 @@ const UserCalendar = ({ user }) => {
                     />
                 </div>
             )}
+            <div className="streaks">
+                <h3>Current Streak: {streaks} days</h3>
+            </div>
         </div>
     );
 };
