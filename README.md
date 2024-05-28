@@ -1,3 +1,35 @@
+# Getting Started
+
+Back-end Installation
+Ensure you are in the root directory of the project.
+
+Install pipenv and dependencies:
+
+    pipenv install
+
+Activate the virtual environment:
+
+    pipenv shell
+
+Database Setup
+Navigate to the server directory:
+
+    cd server
+
+Create and seed your database:   
+
+    flask db init   
+    flask db migrate -m'initial migration'
+    python seed.py
+
+Open your terminal using your pipenv shell, navigate to server and run your backend:
+    cd server
+    python app.py
+
+Open another terminal and using your pipenv shell, navigate to client and run your frontend:
+    cd client
+    npm run dev
+
 # Meditation App (title pending)
 
 A meditation platform that provides users a variety of filterable audio backgrounds and guided options for meditating, encourages users to practice regularly by recording their use history, and allows users to interact with the platform through journaling to record their thoughts and feedback about their sessions. 

@@ -33,8 +33,8 @@ class User(db.Model, SerializerMixin):
         return username
     
 # relationships here
-    sessions = db.relationship('Session', back_populates='user')
-
+    sessions = db.relationship('Session', back_populates='user', cascade='all, delete')
+    
 
 # serialize rules here
     serialize_rules = ('-sessions.user', '-sessions.meditation')

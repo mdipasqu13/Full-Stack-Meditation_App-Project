@@ -102,7 +102,7 @@ def login():
         response = make_response(user.to_dict())
         response.set_cookie('user_id', str(user.id))
         return response, 200
-    return jsonify({'message': 'Invalid username or password'}), 401
+    return make_response({'message': 'Invalid username or password'}), 401
 
 
 # route to get all meditations in db
@@ -151,6 +151,7 @@ class UsersById(Resource):
                 return make_response({"errors": ["validation errors"]}, 400)
            
     def delete(self, id):
+        # import ipdb; ipdb.set_trace()
         try:
             user = User.query.filter(User.id == id).first()
             if not user:

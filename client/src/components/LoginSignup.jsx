@@ -1,17 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import "./LoginSignup.css"
+import "./LoginSignup.css";
 import { GoogleLoginButton, FacebookLoginButton } from 'react-social-login-buttons';
 import { useNavigate } from 'react-router-dom';
 
 // Validation schemas for user, login, and signup forms
-const userSchema = Yup.object().shape({
-  username: Yup.string().required('Required'),
-  password: Yup.string().required('Required'),
-});
-
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string().required('Required'),
@@ -23,43 +17,40 @@ const SignupSchema = Yup.object().shape({
 });
 
 // Main component for login and signup functionality
-const LoginSignup = ({updateUser, user}) => {
-  // State to toggle between login and signup forms
+const LoginSignup = ({ updateUser, user }) => {
   const [isSignup, setIsSignup] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  // Hook to navigate programmatically
-  const navigate = useNavigate()
-
-  // Function to handle form submission
-  const handleSubmit = (values) => {
-    // Determine the URL based on whether the user is signing up or logging in
+  const handleSubmit = (values, { setSubmitting, resetForm }) => {
     const url = isSignup ? 'http://localhost:5555/users' : 'http://localhost:5555/login';
     fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: values.email.toLowerCase(),  // Convert email to lowercase to ensure case-insensitivity
-            password: values.password
-        }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: values.email.toLowerCase(),
+        password: values.password,
+      }),
     })
-    .then(response => {
-      if (response.ok){
-        return response.json()
-      }else{
-        console.error('Error')
-      }
-    })
-    .then(data => {
-        updateUser(data) // Update user state with response data
-        console.log('Success:', data);
-        localStorage.setItem('user', JSON.stringify(data.id));  // Store user in local storage
-        navigate('/', { relative: 'path' }); // Navigate to home page on successful login/signup
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          throw new Error('Invalid credentials');
+        }
+      })
+      .then(data => {
+        updateUser(data);
+        localStorage.setItem('user', JSON.stringify(data.id));
+        navigate('/', { relative: 'path' });
+      })
+      .catch(error => {
+        setError(error.message);
+        setSubmitting(false);
+        resetForm();
+      });
   };
 
   useEffect(() => {
@@ -67,49 +58,41 @@ const LoginSignup = ({updateUser, user}) => {
     if (storedUser) {
       updateUser(JSON.parse(storedUser));
     }
-  }, []);
+  }, [updateUser]);
 
   return (
-    <>
     <div className="container">
-      {/* Button to toggle between login and signup forms */}
       <button onClick={() => setIsSignup(!isSignup)}>
         Switch to {isSignup ? 'Login' : 'Signup'}
       </button>
-      {/* Formik form for handling login/signup */}
       <Formik
-        initialValues={{
-          email: '',
-          password: '',
-        }}
-        validationSchema={isSignup ? SignupSchema : LoginSchema} // Choose the correct validation schema
+        initialValues={{ email: '', password: '' }}
+        validationSchema={isSignup ? SignupSchema : LoginSchema}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
-    <Form>
-        <div className="input">
-            <Field name="email" type="email" placeholder="Email" />
-            <ErrorMessage name="email" component="div" className="error" />
-        </div>
-        <div className="input">
-            <Field name="password" type="password" placeholder="Password" />
-            <ErrorMessage name="password" component="div" className="error" />
-        </div>
-        {/* Submit button, disabled while submitting */}
-        <button type="submit" className="submit" disabled={isSubmitting}>
-            {isSignup ? 'Sign Up' : 'Log In'}
-        </button>
-        {isSubmitting && <p>Loading...</p>}
-    </Form>
-                    )}
+          <Form>
+            <div className="input">
+              <Field name="email" type="email" placeholder="Email" />
+              <ErrorMessage name="email" component="div" className="error" />
+            </div>
+            <div className="input">
+              <Field name="password" type="password" placeholder="Password" />
+              <ErrorMessage name="password" component="div" className="error" />
+            </div>
+            <button type="submit" className="submit" disabled={isSubmitting}>
+              {isSignup ? 'Sign Up' : 'Log In'}
+            </button>
+            {isSubmitting && <p>Loading...</p>}
+            {error && <p className="error">{error}</p>}
+          </Form>
+        )}
       </Formik>
-      {/* Social login buttons */}
       <div className="social-login-buttons">
-          <GoogleLoginButton onClick={() => console.log("Login with Google")} />
-          <FacebookLoginButton onClick={() => console.log("Login with Facebook")} />
+        <GoogleLoginButton onClick={() => console.log("Login with Google")} />
+        <FacebookLoginButton onClick={() => console.log("Login with Facebook")} />
       </div>
     </div>
-    </>
   );
 };
 
