@@ -25,6 +25,13 @@
   border-radius: 3px;
 }
 
+.rbc-toolbar .rbc-active {
+  background-color: rgb(16, 16, 16);
+  color: rgb(7, 0, 0); 
+  border: 1px solid #0f0000; 
+  border-radius: 3px; 
+}
+
 .rbc-toolbar button:hover {
   background-color: #41f0f3;
 }
@@ -59,7 +66,7 @@
 }
 
 .rbc-event:hover {
-  background-color: #030303;
+  background-color: #0a54ca;
 }
 
 /* Overlapping Events */
