@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import "./LoginSignup.css";
@@ -35,7 +35,7 @@ const LoginSignup = ({ updateUser, user }) => {
       }),
     })
       .then(response => {
-        if (response.status === 200) {
+        if (response.status === 200 || 201) {
           return response.json();
         } else {
           throw new Error('Invalid credentials');

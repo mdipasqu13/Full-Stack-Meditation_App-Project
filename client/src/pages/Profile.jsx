@@ -8,7 +8,7 @@ import { fetchSessions, calculateDailyActivity } from './ProfileCalendar';
 import './Profile.css';
 import moment from 'moment';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
-
+// import ReactTooltip from 'react-tooltip';
 
 function Profile({ user, updateUser }) {
   const [recentMeditations, setRecentMeditations] = useState([]);

@@ -1,6 +1,23 @@
 # Getting Started
 
-Back-end Installation
+Make sure you are in your root directory. Begin by navigating to server directory and run the following commands:
+    cd server 
+    pipenv install
+    pipenv shell
+    flask db upgrade head
+    python seed.py
+
+    python app.py 
+
+In a new terminal, begin by navigating to client directory and run the following commands:
+    cd client
+    npm install
+    npm install --legacy-peer-deps
+
+    npm run dev
+
+
+<!-- Back-end Installation
 Ensure you are in the root directory of the project.
 
 Install pipenv and dependencies:
@@ -31,7 +48,7 @@ Open your terminal using your pipenv shell, navigate to server and run your back
 
 Open another terminal and using your pipenv shell, navigate to client and run your frontend:
     cd client
-    npm run dev
+    npm run dev -->
 
 # Meditation App (title pending)
 
