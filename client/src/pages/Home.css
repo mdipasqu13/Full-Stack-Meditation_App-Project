@@ -1,20 +1,53 @@
 .home-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-  }
-  
-  .home-meditations-list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%; 
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+}
 
-  .home-meditations-list img {
-    width: 200px; 
-    height: auto; 
-    margin: 50px; 
+.banner {
+  text-align: center;
+}
+
+.home-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.recent-session {
+  width: 50%;
+}
+
+.home-meditations-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.home-meditations-list img {
+  width: 200px; 
+  height: auto; 
+  margin: 50px; 
+}
+
+.streak-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
+.streak-count {
+  position: absolute;
+  margin-right: 10px;
+  top: 10px; 
+  right: 10px; 
+  background-color: rgba(85, 132, 214, 0.878); 
+  padding: 5px 10px; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  margin-top: 90px;
 }

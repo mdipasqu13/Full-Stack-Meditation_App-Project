@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import affirmations from '../assets/Affirmations.json';
 import './Home.css';
@@ -11,16 +11,14 @@ function Home({ user, updateUser }) {
   const [streak, setStreak] = useState(0);
   const navigate = useNavigate();
 
-  // Function to get a random affirmation
   const getRandomAffirmation = () => {
     const randomIndex = Math.floor(Math.random() * affirmations.affirmations.length);
     return affirmations.affirmations[randomIndex];
   };
 
-  // Function to calculate streak
   const calculateStreak = (sessions) => {
     const uniqueDates = [...new Set(sessions.map(session => moment(session.created_at).format('YYYY-MM-DD')))];
-    uniqueDates.sort(); // Sort dates in ascending order
+    uniqueDates.sort();
 
     let streak = 0;
     let maxStreak = 0;
@@ -35,12 +33,11 @@ function Home({ user, updateUser }) {
     return maxStreak;
   };
 
-  // Function to fetch the most recent session
   useEffect(() => {
     const fetchRecentMeditations = async () => {
       try {
         const response = await axios.get(`http://localhost:5555/users/${user.id}/sessions`);
-        const sessions = response.data.reverse(); // Reverse to get the most recent sessions first
+        const sessions = response.data.reverse();
 
         const uniqueMeditationsMap = new Map();
         for (const session of sessions) {
@@ -72,22 +69,36 @@ function Home({ user, updateUser }) {
         <img 
           src="https://static.vecteezy.com/system/resources/previews/023/521/423/non_2x/find-your-inner-peace-with-our-calming-meditation-logo-design-this-elegant-illustration-is-perfect-for-wellness-and-mindfulness-brands-vector.jpg" 
           alt="Meditation Logo" 
-          style={{ width: '450px', height: '450px', marginTop: '300px', scrollMarginTop: '300px'}} 
+          style={{ width: '350px', height: '350px', marginTop: '300px', scrollMarginTop: '300px'}} 
         />
         <h1 style={{ fontFamily: 'Dancing Script, cursive' }}>{affirmation}</h1>
-        <h2>Most Recent Session</h2>
-        <div className="home-meditations-list">
-          {recentMeditations.map(meditation => (
-            <img 
-              key={meditation.id} 
-              src={meditation.image} 
-              alt={meditation.title} 
-              style={{ cursor: 'pointer' }} 
-              onClick={() => handleMeditationClick(meditation.id)} 
-            />
-          ))}
+        <div className="home-content">
+          <div className="recent-session">
+            <h2>Most Recent Session</h2>
+            <div className="home-meditations-list">
+              {recentMeditations.map(meditation => (
+                <img 
+                  key={meditation.id} 
+                  src={meditation.image} 
+                  alt={meditation.title} 
+                  style={{ cursor: 'pointer' }} 
+                  onClick={() => handleMeditationClick(meditation.id)} 
+                />
+              ))}
+            </div>
+          </div>
+          <div className="streak-section">
+            <div className="streak-count">Current Streak: {streak} days</div>
+            <h2>New to Meditating? Start Here!</h2>
+            <Link to="/resources">
+              <img 
+                src={`./HowToMeditateIcon.png`} 
+                alt="How to Meditate Icon" 
+                style={{ cursor: 'pointer', width: '100px', height: '100px' }} 
+              />
+            </Link>
+          </div>
         </div>
-        <h2>Current Streak: {streak} days</h2>
       </div>
     </div>
   );

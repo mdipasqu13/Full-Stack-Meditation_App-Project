@@ -17,7 +17,7 @@
 
 .rbc-toolbar button {
   background-color: #4c90af;
-  color: white;
+  color: rgb(138, 247, 249);
   border: none;
   padding: 5px 10px;
   margin: 0 5px;
@@ -26,13 +26,13 @@
 }
 
 .rbc-toolbar button:hover {
-  background-color: #54d061;
+  background-color: #41f0f3;
 }
 
 /* Day Header Styles */
 .rbc-header {
-  background-color: #f1f1f1;
-  color: #333;
+  background-color: #1b71e9;
+  color: rgb(138, 247, 249);
   padding: 10px;
   border-bottom: 1px solid #ddd;
   text-align: center;
@@ -40,8 +40,8 @@
 
 /* Time Slot Styles */
 .rbc-time-slot {
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
+  background-color: #7ed4ea;
+  border-bottom: 1px solid #7ed4ea;
   padding: 5px;
   text-align: center;
   color: #666;
@@ -49,8 +49,8 @@
 
 /* Event Styles */
 .rbc-event {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #15b2e6;
+  color: rgb(2, 2, 2);
   border-radius: 3px;
   padding: 5px;
   margin: 2px;
@@ -59,7 +59,7 @@
 }
 
 .rbc-event:hover {
-  background-color: #45a049;
+  background-color: #030303;
 }
 
 /* Overlapping Events */
@@ -80,7 +80,7 @@
 
 /* Today Highlight */
 .rbc-today {
-  background-color: #e6ffe6;
+  background-color: #a9f0f7;
 }
 
 /* Customizing the appearance of the current time indicator */
@@ -110,10 +110,10 @@
 
 .modal-content {
   padding: 20px;
-  color:#010101;
-  background-color: white;
+  color:#0633b0;
+  background-color: rgb(187, 208, 244);
   border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(165, 19, 19, 0.1);
 }
 
 .button-container {
@@ -131,5 +131,5 @@
 }
 
 .button-container button:hover {
-  background-color: #ddd;
+  background-color: #1b35e0;
 }

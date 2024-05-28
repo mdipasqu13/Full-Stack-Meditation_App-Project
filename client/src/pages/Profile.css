@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    flex-direction: column; /* Ensure items are stacked vertically */
+    flex-direction: column; 
 }
 
 .profile-meditation-card {
@@ -44,9 +44,10 @@
 }
 
 .delete-button {
-    position: absolute;
+    position: relative;
     bottom: 20px;
     right: 20px;
+    left: 600px;
     padding: 10px 20px;
     background-color: #440202;
     color: white;
@@ -56,3 +57,19 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.react-calendar-heatmap .color-empty {
+    fill: #ebedf0;
+  }
+  .react-calendar-heatmap .color-scale-1 {
+    fill: #b1eefb;
+  }
+  .react-calendar-heatmap .color-scale-2 {
+    fill: #6edaeb;
+  }
+  .react-calendar-heatmap .color-scale-3 {
+    fill: #329ddb;
+  }
+  .react-calendar-heatmap .color-scale-4 {
+    fill: #2d20e8;
+  }
+  

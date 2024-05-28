@@ -92,8 +92,9 @@ const UserCalendar = ({ user }) => {
                     events={sessions}
                     startAccessor="start"
                     endAccessor="end"
-                    style={{ height: 500 }}
+                    style={{ height: '70vh', width: '60vw' }} // Set the height and width of the calendar
                     onSelectEvent={handleEventClick}
+                    views={['month', 'day']} // Only include month and day views
                     formats={{
                         timeGutterFormat: (date, culture, localizer) =>
                             localizer.format(date, 'hh:mm A', culture),
