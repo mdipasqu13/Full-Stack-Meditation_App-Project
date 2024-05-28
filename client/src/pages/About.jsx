@@ -7,7 +7,7 @@ const About = () => {
             sx={{
                 border: '1px solid grey',
                 padding: 2,
-                margin: 2,
+                // margin: 2,
                 borderRadius: 1,
                 boxShadow: 3,
                 backgroundColor: 'lightblue',

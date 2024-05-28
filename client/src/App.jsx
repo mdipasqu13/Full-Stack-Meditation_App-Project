@@ -1,6 +1,6 @@
 import './App.css';
 import { Route, Routes } from "react-router-dom";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
@@ -12,7 +12,6 @@ import Resources from './pages/Resources';
 import About from './pages/About';
 import MeditationDetail from './pages/MeditationDetail';
 
-
 function App() {
   // State hook to manage user state
   const [user, setUser] = useState(null);
@@ -20,12 +19,12 @@ function App() {
   // Effect hook to fetch user data on component mount
   useEffect(() => {
     fetch('http://localhost:5555/authenticate-session', {
-      method: 'POST', 
-      body: JSON.stringify({currentSession:localStorage.getItem('user')}),
+      method: 'POST',
+      body: JSON.stringify({ currentSession: localStorage.getItem('user') }),
       headers: {
         'Content-Type': 'application/json'
-      
-      }})
+      }
+    })
       .then((res) => {
         if (res.ok) {
           return res.json(); // Parse JSON data if response is OK
@@ -41,23 +40,23 @@ function App() {
       });
   }, []);
 
-  // Function to update user state
-  const updateUser = (user) => {
+  // Function to update user state, wrapped with useCallback to avoid unnecessary re-renders
+  const updateUser = useCallback((user) => {
     setUser(user);
-  };
+  }, []);
 
   return (
     <>
       <div className="app">
-      <NavBar user={user} updateUser={updateUser}/>
+        <NavBar user={user} updateUser={updateUser} />
 
         <Routes>
-          <Route path="/" element={<Home user={user}/>} />
+          <Route path="/" element={<Home user={user} />} />
           <Route path="/profile" element={<Profile user={user} updateUser={updateUser} />} />
           <Route path="/signin" element={<SignIn updateUser={updateUser} />} />
-          <Route path="/meditations" element={<Meditations user={user}/>} />
+          <Route path="/meditations" element={<Meditations user={user} />} />
           {/* <Route path="/calendar/:userId" element={<CalendarPage />} /> */}
-          <Route path="/calendar" element={<CalendarPage user={user}/>} />
+          <Route path="/calendar" element={<CalendarPage user={user} />} />
           <Route path="/journal" element={<JournalPage user={user} />} />
           <Route path="/resources" element={<Resources user={user} />} />
           <Route path="/about" element={<About user={user} />} />

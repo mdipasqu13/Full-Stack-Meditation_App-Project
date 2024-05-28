@@ -18,9 +18,12 @@ Navigate to the server directory:
 
 Create and seed your database:   
 
-    flask db init   
-    flask db migrate -m'initial migration'
+    flask db upgrade head
     python seed.py
+
+In client directory, run this legacy dependancy for calendar:
+
+    npm install --legacy-peer-deps
 
 Open your terminal using your pipenv shell, navigate to server and run your backend:
     cd server
