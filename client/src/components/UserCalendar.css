@@ -8,7 +8,7 @@
 
 /* Header Styles */
 .rbc-toolbar {
-  background-color: #4cadaf;
+  background-color: #52b6b7;
   color: white;
   padding: 10px;
   border-radius: 5px;
@@ -40,9 +40,9 @@
 
 /* Time Slot Styles */
 .rbc-time-slot {
-  background-color: #7ed4ea;
+  background-color: #c3dbe0;
   border-bottom: 1px solid #7ed4ea;
-  padding: 5px;
+  padding: 10px;
   text-align: center;
   color: #666;
 }
@@ -80,7 +80,7 @@
 
 /* Today Highlight */
 .rbc-today {
-  background-color: #a9f0f7;
+  background-color: #b8dee2;
 }
 
 /* Customizing the appearance of the current time indicator */

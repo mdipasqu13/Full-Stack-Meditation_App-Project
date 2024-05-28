@@ -92,7 +92,7 @@ const JournalEntries = ({ user }) => {
   };
 
   return (
-    <div>
+    <div className="journal-entries-container">
       <h2>Journal Entries</h2>
       <DatePicker
         selected={selectedDate}
