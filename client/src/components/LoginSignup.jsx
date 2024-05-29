@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import "./LoginSignup.css";
-import { GoogleLoginButton, FacebookLoginButton } from 'react-social-login-buttons';
+// import { GoogleLoginButton, FacebookLoginButton } from 'react-social-login-buttons';
 import { useNavigate } from 'react-router-dom';
 
 // Validation schemas for user, login, and signup forms
@@ -88,10 +88,10 @@ const LoginSignup = ({ updateUser, user }) => {
           </Form>
         )}
       </Formik>
-      <div className="social-login-buttons">
+      {/* <div className="social-login-buttons">
         <GoogleLoginButton onClick={() => console.log("Login with Google")} />
         <FacebookLoginButton onClick={() => console.log("Login with Facebook")} />
-      </div>
+      </div> */}
     </div>
   );
 };
