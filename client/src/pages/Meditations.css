@@ -1,55 +1,41 @@
-.meditations-page {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px; 
-  padding: 20px;
-}
-
-.meditations-list {
-  display: flex;
-  flex-direction: column; 
-  gap: 100px; 
-  max-width: 800px;
-  width: 100%;
-}
-
 .meditation-card {
-  width: 300px; 
-  height: 400px; 
+  width: 300px;
+  height: 400px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   color: black;
-  margin: 20px auto; 
+  margin: 20px auto;
   margin-top: 50px;
   margin-bottom: 200px;
+  position: relative;
 }
 
 .meditation-card h2,
 .meditation-card p {
-  color: black; 
+  color: black;
 }
 
 .meditation-card img {
   width: 100%;
-  height: 200px; 
+  height: 200px;
   object-fit: cover;
+  border-radius: 8px;
 }
 
-/* .modal {
+.image-container {
+  position: relative;
+}
+
+.favorite-button {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 50px;
-  height: 100%;
-  background-color: white;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  top: -5px;
+  right: -20px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ff8000; 
 }
-
-.modal-content {
-  padding: 20px;
-} */

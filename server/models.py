@@ -34,7 +34,8 @@ class User(db.Model, SerializerMixin):
     
 # relationships here
     sessions = db.relationship('Session', back_populates='user', cascade='all, delete')
-    
+    favorites = db.relationship('Favorite', back_populates='user', cascade='all, delete')
+
 
 # serialize rules here
     serialize_rules = ('-sessions.user', '-sessions.meditation')
@@ -74,6 +75,12 @@ class Meditation(db.Model, SerializerMixin):
     
     # relationships here
     sessions = db.relationship('Session', back_populates='meditation')
+    favorites = db.relationship('Favorite', back_populates='meditation', cascade='all, delete')
+    favorites = db.relationship('Favorite', back_populates='meditation')
+
+
+
+
     # categories = db.relationship('MeditationCategory', back_populates='meditation')
     # serialize rules here
     serialize_rules = ('-sessions.user', '-sessions.meditation', '-categories.meditation')
@@ -131,23 +138,23 @@ class Session(db.Model, SerializerMixin):
             'created_at': created_at_eastern.isoformat()
         }
     
-# class Category(db.Model, SerializerMixin):
-#     __tablename__ = 'categories'
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String, nullable=False, unique=True)
-    
-#     # relationships here
-#     meditation_categories = db.relationship('MeditationCategory', back_populates='category')
+class Favorite(db.Model, SerializerMixin):
+    __tablename__ = 'favorites'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    meditation_id = db.Column(db.Integer, db.ForeignKey('meditations.id'), nullable=False)
+    # created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
 
-#     # serialize rules here
-    
-# class MeditationCategory(db.Model, SerializerMixin):
-#     __tablename__ = 'meditation_category'
-#     id = db.Column(db.Integer, primary_key=True)
-#     meditation_id = db.Column(db.Integer, db.ForeignKey('meditations.id'), nullable=False)
-#     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
-#     # relationships here
-#     meditation = db.relationship('Meditation', back_populates='categories')
-#     category = db.relationship('Category', back_populates='meditation_categories')
+    # Relationships
+    user = db.relationship('User', back_populates='favorites')
+    meditation = db.relationship('Meditation', back_populates='favorites')
 
-    # serialize rules here
+    serialize_rules = ('-user.favorites', '-meditation.favorites')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'meditation_id': self.meditation_id,
+            # 'created_at': self.created_at.isoformat()
+        }

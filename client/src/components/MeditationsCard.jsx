@@ -1,9 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import axios from 'axios';
+import './MeditationsCard.css'; 
 
-const MeditationsCard = ({ meditation, user, onSessionCreated }) => {
+const MeditationsCard = ({ meditation, user }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    const checkFavorite = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5555/favorites/${user.id}`);
+        const favoriteMeditations = response.data.map(fav => fav.meditation_id);
+        setIsFavorite(favoriteMeditations.includes(meditation.id));
+      } catch (error) {
+        console.error('Error checking favorite:', error);
+      }
+    };
+
+    checkFavorite();
+  }, [user.id, meditation.id]);
+
+  const handleFavorite = async () => {
+    try {
+      if (isFavorite) {
+        await axios.delete(`http://localhost:5555/favorites/${user.id}/${meditation.id}`);
+      } else {
+        await axios.post('http://localhost:5555/favorites', {
+          user_id: user.id,
+          meditation_id: meditation.id,
+        });
+      }
+      setIsFavorite(!isFavorite);
+    } catch (error) {
+      console.error('Error updating favorite:', error);
+    }
+  };
+
   const handlePlay = async () => {
     try {
       const response = await axios.post('http://localhost:5555/sessions', {
@@ -22,7 +55,12 @@ const MeditationsCard = ({ meditation, user, onSessionCreated }) => {
 
   return (
     <div className="meditation-card">
-      <img src={meditation.image} alt={meditation.title} />
+      <div className="image-container">
+        <img src={meditation.image} alt={meditation.title} />
+        <button onClick={handleFavorite} className="favorite-button">
+          {isFavorite ? '⭐' : '☆'}
+        </button>
+      </div>
       <h2>{meditation.title}</h2>
       <p>{meditation.description}</p>
       <p>Duration: {meditation.duration}</p>

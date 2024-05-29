@@ -1,12 +1,11 @@
 from flask import jsonify, make_response, request, session
-from models import User, Meditation, Session
+from models import User, Meditation, Session, Favorite
 from flask_restful import  Resource
 from sqlalchemy import desc
 import ipdb
 import json
 
 from config import app, db, api
-
 
 @app.route('/users/<int:user_id>/recent_session', methods=['GET'])
 def get_recent_session(user_id):
@@ -103,6 +102,36 @@ def login():
         return response, 200
     return make_response({'message': 'Invalid username or password'}), 401
 
+@app.route('/favorites', methods=['POST'])
+def add_favorite():
+    data = request.get_json()
+    new_favorite = Favorite(
+        user_id=data['user_id'],
+        meditation_id=data['meditation_id']
+    )
+    try:
+        db.session.add(new_favorite)
+        db.session.commit()
+        return make_response(new_favorite.to_dict(), 201)
+    except Exception as e:
+        db.session.rollback()
+        return make_response({'error': str(e)}, 400)
+
+@app.route('/favorites/<int:user_id>', methods=['GET'])
+def get_favorites(user_id):
+    favorites = [fav.to_dict() for fav in Favorite.query.filter_by(user_id=user_id).all()]
+    return jsonify(favorites)
+
+@app.route('/favorites/<int:user_id>/<int:meditation_id>', methods=['DELETE'])
+def delete_favorite(user_id, meditation_id):
+    favorite = Favorite.query.filter_by(user_id=user_id, meditation_id=meditation_id).first()
+    if favorite:
+        db.session.delete(favorite)
+        db.session.commit()
+        return make_response({'message': 'Favorite deleted successfully'}, 200)
+    else:
+        return make_response({'error': 'Favorite not found'}, 404)
+
 
 # route to get all meditations in db
 class Meditations(Resource):
@@ -196,56 +225,6 @@ class SessionsById(Resource):
             return make_response({}, 204)
 api.add_resource(SessionsById, '/sessions/<int:id>')
     
-# class CategoriesById(Resource):
-#     def get(self, id):
-#         category = Category.query.filter(Category.id == id).first()
-#         if category:
-#             return make_response(category.to_dict())
-#         else:
-#             return make_response({'error': 'Category not found'}, 404)
-#     def patch(self, id):
-#         category = Category.query.filter(Category.id == id).first()
-#         if not category:
-#             return make_response({"error": "Category not found"}, 404)
-#         else:
-#             try:
-#                 category.name = request.json.get('name', category.name)
-#                 db.session.add(category)
-#                 db.session.commit()
-
-#                 return make_response(category.to_dict(), 202)
-#             except:
-#                 return make_response({"errors": ["validation errors"]}, 400)
-
-#     def delete(self, id):
-#         category = Category.query.filter(Category.id == id).first()
-#         if not category:
-#             return make_response({"error": "Category not found"}, 404)
-#         else:
-#             db.session.delete(category)
-#             db.session.commit()
-            
-#             return make_response({}, 204)
-
-# api.add_resource(CategoriesById, '/categories/<int:id>')
-
-# class MeditationCategories(Resource):
-#     def get(self):
-#         meditation_categories = [mc.to_dict() for mc in MeditationCategory.query.all()]
-#         return make_response(meditation_categories)
-
-#     def post(self):
-#         data = request.get_json()
-#         new_mc = MeditationCategory(
-#             meditation_id=data.get('meditation_id'),
-#             category_id=data.get('category_id')
-#         )
-#         db.session.add(new_mc)
-#         db.session.commit()
-#         return make_response(new_mc.to_dict(), 201)
-
-# api.add_resource(MeditationCategories, '/meditation_categories')
-        
         
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

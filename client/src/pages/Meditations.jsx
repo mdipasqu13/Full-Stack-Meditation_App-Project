@@ -9,6 +9,7 @@ import axios from 'axios';
 const Meditations = ({ user }) => {
   const [meditations, setMeditations] = useState([]);
   const [filteredMeditations, setFilteredMeditations] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [category, setCategory] = useState('');
   const [duration, setDuration] = useState('');
   const location = useLocation();
@@ -20,14 +21,24 @@ const Meditations = ({ user }) => {
       try {
         const response = await axios.get('http://localhost:5555/meditations');
         setMeditations(response.data);
-        setFilteredMeditations(response.data); // Initialize filtered meditations
+        setFilteredMeditations(response.data); 
       } catch (error) {
         console.error('Error fetching meditations:', error);
       }
     };
 
+    const fetchFavorites = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5555/favorites/${user.id}`);
+        setFavorites(response.data.map(fav => fav.meditation_id));
+      } catch (error) {
+        console.error('Error fetching favorites:', error);
+      }
+    };
+
     fetchMeditations();
-  }, []);
+    fetchFavorites();
+  }, [user]);
 
   useEffect(() => {
     if (selectedMeditationId && meditationRefs.current[selectedMeditationId]) {
@@ -50,13 +61,18 @@ const Meditations = ({ user }) => {
     filterMeditations();
   }, [category, duration, meditations]);
 
+  const sortedMeditations = [
+    ...filteredMeditations.filter(meditation => favorites.includes(meditation.id)),
+    ...filteredMeditations.filter(meditation => !favorites.includes(meditation.id))
+  ];
+
   return (
     <div>
       <header className="header">
         <h1>Meditations</h1>
       </header>
       <FilterBar setCategory={setCategory} setDuration={setDuration} />
-      {filteredMeditations.map(meditation => (
+      {sortedMeditations.map(meditation => (
         <div
           key={meditation.id}
           ref={el => (meditationRefs.current[meditation.id] = el)}
