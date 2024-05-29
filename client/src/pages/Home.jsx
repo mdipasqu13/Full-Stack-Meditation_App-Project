@@ -17,8 +17,9 @@ function Home({ user, updateUser }) {
   };
 
   const calculateStreak = (sessions) => {
-    const uniqueDates = [...new Set(sessions.map(session => moment(session.created_at).format('YYYY-MM-DD')))];
-    uniqueDates.sort();
+    // Extract unique dates from sessions using the adjusted createdAt time
+    const uniqueDates = [...new Set(sessions.map(session => moment(session.createdAt).format('YYYY-MM-DD')))];
+    uniqueDates.sort(); // Sort dates in ascending order
 
     let streak = 0;
     let maxStreak = 0;
@@ -47,8 +48,13 @@ function Home({ user, updateUser }) {
             uniqueMeditationsMap.set(session.meditation_id, meditationResponse.data);
           }
         }
+        // Adjust the createdAt time for each session
+        const adjustedSessions = sessions.map(session => ({
+          ...session,
+          createdAt: moment(session.created_at).subtract(4, 'hours').toDate(),
+        }));
         setRecentMeditations(Array.from(uniqueMeditationsMap.values()));
-        setStreak(calculateStreak(sessions));
+        setStreak(calculateStreak(adjustedSessions));
       } catch (error) {
         console.error('Error fetching recent session:', error);
       }

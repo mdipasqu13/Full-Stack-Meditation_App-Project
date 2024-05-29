@@ -6,7 +6,6 @@ import axios from 'axios';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './UserCalendar.css';
 import JournalModal from './JournalModal';
-// import CustomEvent from './CustomEvent';
 
 // Set up the moment localizer
 const localizer = momentLocalizer(moment);
@@ -48,8 +47,8 @@ const UserCalendar = ({ user }) => {
     }, [user.id]);
 
     const calculateStreaks = (sessions) => {
-        // Extract unique dates from sessions
-        const uniqueDates = [...new Set(sessions.map(session => moment(session.original_created_at).format('YYYY-MM-DD')))];
+        // Extract unique dates from sessions using the adjusted createdAt time
+        const uniqueDates = [...new Set(sessions.map(session => moment(session.start).format('YYYY-MM-DD')))];
         uniqueDates.sort(); // Sort dates in ascending order
 
         let streak = 0;
@@ -96,9 +95,6 @@ const UserCalendar = ({ user }) => {
                     style={{ height: '70vh', width: '60vw' }} // Set the height and width of the calendar
                     onSelectEvent={handleEventClick}
                     views={['month', 'day']} // Only include month and day views
-                    // components={{
-                    //     event: CustomEvent, // Use the custom event component
-                    // }}
                     formats={{
                         timeGutterFormat: (date, culture, localizer) =>
                             localizer.format(date, 'hh:mm A', culture),
