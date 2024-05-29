@@ -88,7 +88,7 @@ function Profile({ user, updateUser }) {
         count: dailyActivity[dayKey] || 0,
       });
     }
-    console.log('Heatmap values:', values); // Debugging log
+    console.log(values);
     return values;
   };
 

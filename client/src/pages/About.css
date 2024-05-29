@@ -1,0 +1,22 @@
+.about-page {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('public/aboutBeach.jpeg'); 
+    background-size: contain; /* Ensures the image fits within the container */
+    background-position: center; 
+    background-repeat: no-repeat; 
+    position: relative; /* Ensure the parent is positioned */
+}
+
+.about-box {
+    padding: 20px;
+    border-radius: 8px;
+    color: black;
+    width: 50%;
+    margin-left: 500px;
+    margin-top: 100px;
+    transform: translateY(-50%); 
+}

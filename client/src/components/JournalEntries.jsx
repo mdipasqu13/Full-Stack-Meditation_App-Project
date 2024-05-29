@@ -64,6 +64,8 @@ const JournalEntries = ({ user }) => {
   };
 
   const handleDelete = async (id) => {
+    const confirmed = window.confirm('Are you sure you want to delete this session?');
+    if (confirmed) {
     try {
       const response = await fetch(`http://127.0.0.1:5555/sessions/${id}`, {
         method: 'DELETE',
@@ -79,7 +81,7 @@ const JournalEntries = ({ user }) => {
       console.error('Error deleting session:', error);
       alert('Failed to delete session. Please try again.');
     }
-  };
+  }};
 
   const filteredEntries = entries.filter(entry => {
     const entryDate = moment(entry.created_at).subtract(4, 'hours').toDate();

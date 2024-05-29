@@ -44,12 +44,14 @@ const JournalModal = ({ event, onClose, onSave, onDelete }) => {
   };
 
   const handleDelete = () => {
+    const confirmed = window.confirm('Are you sure you want to delete this session?');
+    if (confirmed) {
     fetch(`http://localhost:5555/sessions/${event.id}`, {
       method: 'DELETE',
     })
       .then(() => onDelete(event.id))
       .catch(error => console.error('Error deleting session:', error));
-  };
+  }};
 
   return (
     <div className="modal">

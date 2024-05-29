@@ -1,6 +1,5 @@
-
 from flask import jsonify, make_response, request, session
-from models import User, Meditation, Session, MeditationCategory, Category
+from models import User, Meditation, Session
 from flask_restful import  Resource
 from sqlalchemy import desc
 import ipdb
@@ -197,57 +196,58 @@ class SessionsById(Resource):
             return make_response({}, 204)
 api.add_resource(SessionsById, '/sessions/<int:id>')
     
-class CategoriesById(Resource):
-    def get(self, id):
-        category = Category.query.filter(Category.id == id).first()
-        if category:
-            return make_response(category.to_dict())
-        else:
-            return make_response({'error': 'Category not found'}, 404)
-    def patch(self, id):
-        category = Category.query.filter(Category.id == id).first()
-        if not category:
-            return make_response({"error": "Category not found"}, 404)
-        else:
-            try:
-                category.name = request.json.get('name', category.name)
-                db.session.add(category)
-                db.session.commit()
+# class CategoriesById(Resource):
+#     def get(self, id):
+#         category = Category.query.filter(Category.id == id).first()
+#         if category:
+#             return make_response(category.to_dict())
+#         else:
+#             return make_response({'error': 'Category not found'}, 404)
+#     def patch(self, id):
+#         category = Category.query.filter(Category.id == id).first()
+#         if not category:
+#             return make_response({"error": "Category not found"}, 404)
+#         else:
+#             try:
+#                 category.name = request.json.get('name', category.name)
+#                 db.session.add(category)
+#                 db.session.commit()
 
-                return make_response(category.to_dict(), 202)
-            except:
-                return make_response({"errors": ["validation errors"]}, 400)
+#                 return make_response(category.to_dict(), 202)
+#             except:
+#                 return make_response({"errors": ["validation errors"]}, 400)
 
-    def delete(self, id):
-        category = Category.query.filter(Category.id == id).first()
-        if not category:
-            return make_response({"error": "Category not found"}, 404)
-        else:
-            db.session.delete(category)
-            db.session.commit()
+#     def delete(self, id):
+#         category = Category.query.filter(Category.id == id).first()
+#         if not category:
+#             return make_response({"error": "Category not found"}, 404)
+#         else:
+#             db.session.delete(category)
+#             db.session.commit()
             
-            return make_response({}, 204)
+#             return make_response({}, 204)
 
-api.add_resource(CategoriesById, '/categories/<int:id>')
+# api.add_resource(CategoriesById, '/categories/<int:id>')
 
-class MeditationCategories(Resource):
-    def get(self):
-        meditation_categories = [mc.to_dict() for mc in MeditationCategory.query.all()]
-        return make_response(meditation_categories)
+# class MeditationCategories(Resource):
+#     def get(self):
+#         meditation_categories = [mc.to_dict() for mc in MeditationCategory.query.all()]
+#         return make_response(meditation_categories)
 
-    def post(self):
-        data = request.get_json()
-        new_mc = MeditationCategory(
-            meditation_id=data.get('meditation_id'),
-            category_id=data.get('category_id')
-        )
-        db.session.add(new_mc)
-        db.session.commit()
-        return make_response(new_mc.to_dict(), 201)
+#     def post(self):
+#         data = request.get_json()
+#         new_mc = MeditationCategory(
+#             meditation_id=data.get('meditation_id'),
+#             category_id=data.get('category_id')
+#         )
+#         db.session.add(new_mc)
+#         db.session.commit()
+#         return make_response(new_mc.to_dict(), 201)
 
-api.add_resource(MeditationCategories, '/meditation_categories')
+# api.add_resource(MeditationCategories, '/meditation_categories')
         
         
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+
 

@@ -70,10 +70,11 @@ class Meditation(db.Model, SerializerMixin):
     duration = db.Column(db.String, nullable=False)
     audio_url = db.Column(db.String, nullable=False)
     image = db.Column(db.String, nullable=True)
+    category = db.Column(db.String, nullable=True)
     
     # relationships here
     sessions = db.relationship('Session', back_populates='meditation')
-    categories = db.relationship('MeditationCategory', back_populates='meditation')
+    # categories = db.relationship('MeditationCategory', back_populates='meditation')
     # serialize rules here
     serialize_rules = ('-sessions.user', '-sessions.meditation', '-categories.meditation')
     
@@ -130,23 +131,23 @@ class Session(db.Model, SerializerMixin):
             'created_at': created_at_eastern.isoformat()
         }
     
-class Category(db.Model, SerializerMixin):
-    __tablename__ = 'categories'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False, unique=True)
+# class Category(db.Model, SerializerMixin):
+#     __tablename__ = 'categories'
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String, nullable=False, unique=True)
     
-    # relationships here
-    meditation_categories = db.relationship('MeditationCategory', back_populates='category')
+#     # relationships here
+#     meditation_categories = db.relationship('MeditationCategory', back_populates='category')
 
-    # serialize rules here
+#     # serialize rules here
     
-class MeditationCategory(db.Model, SerializerMixin):
-    __tablename__ = 'meditation_category'
-    id = db.Column(db.Integer, primary_key=True)
-    meditation_id = db.Column(db.Integer, db.ForeignKey('meditations.id'), nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
-    # relationships here
-    meditation = db.relationship('Meditation', back_populates='categories')
-    category = db.relationship('Category', back_populates='meditation_categories')
+# class MeditationCategory(db.Model, SerializerMixin):
+#     __tablename__ = 'meditation_category'
+#     id = db.Column(db.Integer, primary_key=True)
+#     meditation_id = db.Column(db.Integer, db.ForeignKey('meditations.id'), nullable=False)
+#     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
+#     # relationships here
+#     meditation = db.relationship('Meditation', back_populates='categories')
+#     category = db.relationship('Category', back_populates='meditation_categories')
 
     # serialize rules here

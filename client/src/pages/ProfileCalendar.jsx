@@ -20,7 +20,7 @@ export const fetchSessions = async (userId) => {
 export const calculateDailyActivity = (sessions) => {
     const activity = {};
     sessions.forEach(session => {
-        const day = moment(session.original_created_at).format('YYYY-MM-DD');
+        const day = moment(session.createdAt).format('YYYY-MM-DD');
         if (!activity[day]) {
             activity[day] = 0;
         }

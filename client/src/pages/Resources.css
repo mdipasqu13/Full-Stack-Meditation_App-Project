@@ -1,0 +1,20 @@
+.video-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; 
+}
+
+.video-container > div {
+    flex: 1; 
+    max-width: 60%;
+}
+
+.book-image {
+    width: 15%;
+    height: auto;
+}
+
+.cushion-image {
+    width: 20%;
+    height: auto;
+}

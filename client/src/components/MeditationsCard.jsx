@@ -11,7 +11,6 @@ const MeditationsCard = ({ meditation, user, onSessionCreated }) => {
         meditation_id: meditation.id,
       });
       console.log('Session created:', response.data);
-      onSessionCreated(response.data); // Trigger the modal with the new session
     } catch (error) {
       console.error('Error creating session:', error);
     }

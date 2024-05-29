@@ -4,7 +4,8 @@
     "description": "Relaxing guided meditation to help you fall asleep",
     "duration": "20 minutes",
     "audio_url": "/GuidedSleepMeditation.mp3",
-    "image": "/sleepImage.webp"
+    "image": "/sleepImage.webp",
+    "category": "relaxation"
     },
 
     {
@@ -12,30 +13,32 @@
     "description": "Guided morning affirmations to start your day",
     "duration": "5 minutes",
     "audio_url": "/MorningAffirmations.mp3",
-    "image": "/morningAffirmations.jpeg"
-
+    "image": "/morningAffirmations.jpeg",
+    "category": "affirmations"
     },
     {
     "title": "Singing bowl meditation",
     "description": "Connect with and heal your inner spirit",
     "duration": "10 minutes",
     "audio_url": "/SingingBowlMeditationShort.mp3",
-    "image": "/singingBowlSmall.jpeg"
+    "image": "/singingBowlSmall.jpeg",
+    "category": "ambient music and sounds"
     },
-
     {
     "title": "Singing bowl meditation",
     "description": "Connect with and heal your inner spirit",
     "duration": "20 minutes",
     "audio_url": "/SingingBowlMeditationLong.mp3",
-    "image": "/singingBowlLarge.webp"
+    "image": "/singingBowlLarge.webp",
+    "category": "ambient music and sounds"
     },
     {
     "title": "Vipassana Meditation",
     "description": "Guided Vipassana Meditation for Beginners",
     "duration": "20 minutes",
     "audio_url": "/VipassanaMeditation.mp3",
-    "image": "/vipassanaImage.jpeg"
+    "image": "/vipassanaImage.jpeg",
+    "category": "vipassana"
     },
    
     {
@@ -43,7 +46,8 @@
     "description": "Guided Meditation for Inner Stillness",
     "duration": "20 minutes",
     "audio_url": "/CalmMeditation.mp3",
-    "image": "/calm.jpeg"
+    "image": "/calm.jpeg",
+    "category": "mindfulness"
     },
   
     {
@@ -51,28 +55,33 @@
     "description": "Powerful Twenty Minute Guided Meditation",
     "duration": "20 minutes",
     "audio_url": "/SelfEmpowermentMeditation.mp3",
-    "image": "/selfEmpowerment.jpeg"
+    "image": "/selfEmpowerment.jpeg",
+    "category": "empowerment"
     },
     {
     "title": "Journey Meditation",
     "description": "Guided Journey Within for Inner Peace",
     "duration": "10 minutes",
     "audio_url": "/JourneyMeditation.mp3",
-    "image": "/journeyMeditation.jpeg"
+    "image": "/journeyMeditation.jpeg",
+    "category": "journey"
     },
     {
     "title": "Mindfulness Meditation",
     "description": "Guided Mindfulness Meditation",
     "duration": "10 minutes",
     "audio_url": "/MindfulnessMeditation.mp3",
-    "image": "/mindfulness.png"
+    "image": "/mindfulness.png",
+    "category":"mindfulness"
     },
     {
     "title": "Quick Meditation to Ground Your Day",
     "description": "Short guided meditation you can do anywhere!",
     "duration": "5 minutes",
     "audio_url": "/QuickMeditation.mp3",
-    "image": "/groundingMeditation.jpeg"
+    "image": "/groundingMeditation.jpeg",
+    "category": "relaxation"
     }
 ]
+
 

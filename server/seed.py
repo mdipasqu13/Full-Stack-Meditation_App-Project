@@ -2,7 +2,7 @@
 from random import randint, choice as rc
 from faker import Faker
 from app import app
-from models import db, User, Meditation, Session, Category, MeditationCategory
+from models import db, User, Meditation, Session
 import json
 from os.path import join, dirname
 
@@ -21,7 +21,8 @@ def create_meditations():
             description=meditation_data['description'],
             audio_url=meditation_data['audio_url'],
             duration=meditation_data['duration'],
-            image=meditation_data['image']
+            image=meditation_data['image'],
+            category=meditation_data['category']
         )
         
         db.session.add(meditation)
