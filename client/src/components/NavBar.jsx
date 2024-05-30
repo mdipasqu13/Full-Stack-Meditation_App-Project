@@ -25,7 +25,7 @@ const NavBar = ({ user, updateUser }) => {
             alt="Meditation Logo"
             className="navbar-logo-img"
           />
-          <span>Meditation Site</span>
+          <span style={{ fontFamily: 'Dancing Script, cursive, bold' }}>Calm-Space</span>
         </NavLink>
         <div className="navbar-links">
           <NavLink

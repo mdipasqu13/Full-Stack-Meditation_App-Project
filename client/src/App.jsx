@@ -10,7 +10,6 @@ import CalendarPage from './pages/CalendarPage';
 import JournalPage from './pages/JournalPage';
 import Resources from './pages/Resources';
 import About from './pages/About';
-import MeditationDetail from './pages/MeditationDetail';
 
 function App() {
   // state stores the current user by default set to null
@@ -58,7 +57,6 @@ function App() {
           <Route path="/journal" element={<JournalPage user={user} />} />
           <Route path="/resources" element={<Resources user={user} />} />
           <Route path="/about" element={<About user={user} />} />
-          <Route path="/meditations/:id" element={<MeditationDetail user={user} />} />
         </Routes>
       </div>
     </>
