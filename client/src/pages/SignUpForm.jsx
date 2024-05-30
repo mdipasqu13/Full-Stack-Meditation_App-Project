@@ -16,7 +16,7 @@ const SignUpForm = () => {
         password,
       });
 
-      console.log(response.data); // Handle the response from the server
+      console.log(response.data); 
     } catch (error) {
       console.error('Error signing up:', error);
     }

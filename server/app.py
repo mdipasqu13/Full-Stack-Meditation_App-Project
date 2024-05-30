@@ -21,17 +21,13 @@ def get_user_sessions(user_id):
     
     return jsonify(sessions)
 
-# added this route for creating new sessions, not sure about it
 @app.route('/sessions', methods=['POST'])
 def create_session():
-    # if 'user_id' not in session:
-    #     return make_response({'error': 'Unauthorized'}, 403)
     
     data = request.get_json()
     new_session = Session(
         user_id=data['user_id'],
         meditation_id=data['meditation_id'],
-        # created_at=data['created_at']
     )
     try:
         db.session.add(new_session)
@@ -43,7 +39,6 @@ def create_session():
         return make_response({'error': str(e)}, 400)
 
 
-# added this route for updating sessions
 @app.route('/update_session/<int:id>', methods=['PATCH'])
 def update_session(id):
     data = request.get_json()

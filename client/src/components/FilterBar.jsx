@@ -1,5 +1,4 @@
 import React from 'react';
-// import './FilterBar.css';
 
 const FilterBar = ({ setCategory, setDuration }) => {
   const handleCategoryChange = (event) => {

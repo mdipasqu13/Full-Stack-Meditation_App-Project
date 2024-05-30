@@ -69,7 +69,6 @@
   background-color: #0a54ca;
 }
 
-/* Overlapping Events */
 .rbc-event-content {
   display: flex;
   flex-direction: column;
@@ -85,18 +84,15 @@
   white-space: normal;
 }
 
-/* Today Highlight */
 .rbc-today {
   background-color: #b8dee2;
 }
 
-/* Customizing the appearance of the current time indicator */
 .rbc-current-time-indicator {
   background-color: #ff0000;
   height: 2px;
 }
 
-/* Customizing the appearance of the all-day events row */
 .rbc-allday-cell {
   display: none;
 }
@@ -112,7 +108,7 @@
 }
 
 .journal-modal {
-  flex: 0 0 300px; /* Adjust the width as needed */
+  flex: 0 0 300px; 
 }
 
 .modal-content {
@@ -141,10 +137,3 @@
   background-color: #1b35e0;
 }
 
-/* .custom-event {
-  padding: 5px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 5px;
-} */

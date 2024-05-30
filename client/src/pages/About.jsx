@@ -1,5 +1,4 @@
 import React from 'react';
-import Box from '@mui/material/Box';
 import './About.css';
 
 const About = () => {

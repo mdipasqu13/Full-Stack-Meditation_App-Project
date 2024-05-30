@@ -1,4 +1,3 @@
-// JournalContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import moment from 'moment';
 import axios from 'axios';
@@ -65,10 +64,17 @@ const JournalProvider = ({ children, user }) => {
     }
   };
 
+  const handleCancel = () => {
+    setEditingEntryId(null);
+    setJournalEntry('');
+  };
+
   const filteredEntries = entries.filter(entry => {
     const entryDate = moment(entry.created_at).subtract(4, 'hours').toDate();
     return entryDate.toDateString() === selectedDate.toDateString();
-  });
+  })
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); 
+  
 
   const convertToEasternTime = (dateString) => {
     const date = moment(dateString).subtract(4, 'hours').toDate();
@@ -78,7 +84,6 @@ const JournalProvider = ({ children, user }) => {
   return (
     <JournalContext.Provider
       value={{
-        entries,
         loading,
         error,
         selectedDate,
@@ -91,6 +96,7 @@ const JournalProvider = ({ children, user }) => {
         handleDelete,
         filteredEntries,
         convertToEasternTime,
+        handleCancel,
       }}
     >
       {children}

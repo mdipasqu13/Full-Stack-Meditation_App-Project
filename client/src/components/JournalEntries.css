@@ -1,10 +1,10 @@
 .journal-entry-box {
-    border: 10px solid hsla(240, 100%, 0%, 0.897);
+    border: 15px solid hsla(179, 90%, 12%, 0.897);
     border-radius: 8px;
     padding: 16px;
     margin: 8px 0;
     background-color: #b5e3e3;
-    color: #050505; 
+    color: #060606; 
   }
   
   .journal-entry-box p {
@@ -25,7 +25,7 @@
   
   .journal-entry-box button {
     margin-top: 8px;
-    padding: 8px 16px;
+    padding: 8=px 16px;
     border: none;
     border-radius: 4px;
     background-color: #69c7e4de;
@@ -38,5 +38,21 @@
   }
 
   .journal-entries-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     margin-top: 60px; 
+}
+
+.journal-entries-container {
+  column-count: 3;
+  column-gap: 70px; 
+}
+
+.journal-entry-box {
+  break-inside: avoid; /* Prevent entries from breaking across columns */
+  margin-bottom: 20px; 
+}
+
+.journal-entries-heading {
+  margin-top: 75px;
 }

@@ -9,8 +9,7 @@ import pytz
 
 from config import db, bcrypt
 
-# db = SQLAlchemy()
-# bcrypt = Bcrypt()
+
 
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
@@ -32,12 +31,10 @@ class User(db.Model, SerializerMixin):
             raise ValueError("Username must be at least 4 characters long")
         return username
     
-# relationships here
     sessions = db.relationship('Session', back_populates='user', cascade='all, delete')
     favorites = db.relationship('Favorite', back_populates='user', cascade='all, delete')
 
 
-# serialize rules here
     serialize_rules = ('-sessions.user', '-sessions.meditation')
     
     @hybrid_property
@@ -73,16 +70,11 @@ class Meditation(db.Model, SerializerMixin):
     image = db.Column(db.String, nullable=True)
     category = db.Column(db.String, nullable=True)
     
-    # relationships here
     sessions = db.relationship('Session', back_populates='meditation')
     favorites = db.relationship('Favorite', back_populates='meditation', cascade='all, delete')
     favorites = db.relationship('Favorite', back_populates='meditation')
 
 
-
-
-    # categories = db.relationship('MeditationCategory', back_populates='meditation')
-    # serialize rules here
     serialize_rules = ('-sessions.user', '-sessions.meditation', '-categories.meditation')
     
     @validates('title')
@@ -90,13 +82,6 @@ class Meditation(db.Model, SerializerMixin):
         if not title:
             raise ValueError("Title cannot be empty")
         return title
-
-    # @validates('description')
-    # def validate_description(self, key, description):
-    #     if not description:
-    #         raise ValueError("Description cannot be empty")
-    #     return description
-    # let's see if I actually write descriptions for all
 
     @validates('duration')
     def validate_duration(self, key, duration):
@@ -118,13 +103,10 @@ class Session(db.Model, SerializerMixin):
     meditation_id = db.Column(db.Integer, db.ForeignKey('meditations.id'), nullable=False)
     journal_entry = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, default=func.now(), nullable=True)
-    # created_at = db.Column(DateTime, default=func.now()) unsure of proper syntax?
-    # I think db.Integer is correct? This is the time stamp for the calendar. 
+
     
-    # relationships here
     user = db.relationship('User', back_populates='sessions')
     meditation = db.relationship('Meditation', back_populates='sessions')
-    # serialize rules here  
     serialize_rules = ('-user.sessions', '-meditation.sessions')
     
     def to_dict(self):
@@ -143,9 +125,7 @@ class Favorite(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     meditation_id = db.Column(db.Integer, db.ForeignKey('meditations.id'), nullable=False)
-    # created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
 
-    # Relationships
     user = db.relationship('User', back_populates='favorites')
     meditation = db.relationship('Meditation', back_populates='favorites')
 
@@ -156,5 +136,4 @@ class Favorite(db.Model, SerializerMixin):
             'id': self.id,
             'user_id': self.user_id,
             'meditation_id': self.meditation_id,
-            # 'created_at': self.created_at.isoformat()
         }

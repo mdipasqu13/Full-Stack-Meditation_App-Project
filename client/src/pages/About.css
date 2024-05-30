@@ -5,10 +5,10 @@
     align-items: center;
     height: 100vh;
     background-image: url('public/aboutBeach.jpeg'); 
-    background-size: contain; /* Ensures the image fits within the container */
+    background-size: contain; 
     background-position: center; 
     background-repeat: no-repeat; 
-    position: relative; /* Ensure the parent is positioned */
+    position: relative; 
 }
 
 .about-box {

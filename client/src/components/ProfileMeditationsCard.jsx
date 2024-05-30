@@ -10,7 +10,6 @@ const ProfileMeditationsCard = ({ meditation, user }) => {
       const response = await axios.post('http://localhost:5555/sessions', {
         user_id: user.id,
         meditation_id: meditation.id,
-        // created_at: new Date().toISOString(),
       });
       console.log('Session created:', response.data);
     } catch (error) {
@@ -28,7 +27,6 @@ const ProfileMeditationsCard = ({ meditation, user }) => {
       <p>Duration: {meditation.duration}</p>
       <AudioPlayer
         src={meditation.audio_url}
-        // onPlay={e => console.log("Playing")}
         onPlay={handlePlay}
       />
     </div>

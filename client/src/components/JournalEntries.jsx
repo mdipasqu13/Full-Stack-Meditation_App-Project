@@ -1,4 +1,3 @@
-// JournalEntries.jsx
 import React, { useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -7,7 +6,6 @@ import './JournalEntries.css';
 
 const JournalEntries = () => {
   const {
-    entries,
     loading,
     error,
     selectedDate,
@@ -20,11 +18,12 @@ const JournalEntries = () => {
     handleDelete,
     filteredEntries,
     convertToEasternTime,
+    handleCancel,
   } = useContext(JournalContext);
 
   return (
-    <div className="journal-entries-container">
-      <h2>Journal Entries</h2>
+    <div>
+      <h2 className="journal-entries-heading">Journal Entries</h2>
       <DatePicker
         selected={selectedDate}
         onChange={date => setSelectedDate(date)}
@@ -35,15 +34,16 @@ const JournalEntries = () => {
       ) : error ? (
         <div>Error: {error.message}</div>
       ) : (
-        <ul>
+        <div className="journal-entries-container">
           {filteredEntries.map(entry => (
-            <li key={entry.id} className="journal-entry-box">
+            <div key={entry.id} className="journal-entry-box">
               <p><strong>Date:</strong> {convertToEasternTime(entry.created_at)}</p>
               <p><strong>Entry:</strong> {entry.journal_entry}</p>
               {editingEntryId === entry.id ? (
                 <>
                   <textarea value={journalEntry} onChange={handleJournalEntryChange} />
                   <button onClick={() => handleSave(entry)}>Save</button>
+                  <button onClick={handleCancel}>Cancel</button>
                 </>
               ) : (
                 <>
@@ -51,9 +51,9 @@ const JournalEntries = () => {
                   <button onClick={() => handleDelete(entry.id)}>Delete</button>
                 </>
               )}
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

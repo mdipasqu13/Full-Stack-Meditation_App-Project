@@ -26,6 +26,6 @@ export const calculateDailyActivity = (sessions) => {
         }
         activity[day]++;
     });
-    console.log('Daily activity:', activity); // Debugging log
+    console.log('Daily activity:', activity); 
     return activity;
 };

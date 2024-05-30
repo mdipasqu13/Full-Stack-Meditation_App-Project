@@ -72,11 +72,6 @@ function Home({ user, updateUser }) {
   return (
     <div className='home-page'>
       <div className='banner'>
-        {/* <img 
-          src="https://static.vecteezy.com/system/resources/previews/023/521/423/non_2x/find-your-inner-peace-with-our-calming-meditation-logo-design-this-elegant-illustration-is-perfect-for-wellness-and-mindfulness-brands-vector.jpg" 
-          alt="Meditation Logo" 
-          style={{ width: '350px', height: '350px', marginTop: '300px', scrollMarginTop: '300px'}} 
-        /> */}
         <h1 style={{ fontFamily: 'Dancing Script, cursive' }}>{affirmation}</h1>
         <div className="home-content">
           <div className="recent-session">
