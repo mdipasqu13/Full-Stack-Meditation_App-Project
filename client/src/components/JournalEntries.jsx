@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { JournalContext } from './JournalContext';
 import './JournalEntries.css';
 
+//Destructures the values and functions from JournalContext file
 const JournalEntries = () => {
   const {
     loading,

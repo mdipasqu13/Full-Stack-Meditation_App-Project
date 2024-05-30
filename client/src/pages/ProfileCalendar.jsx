@@ -1,6 +1,7 @@
 import moment from 'moment';
 import axios from 'axios';
 
+//fetch all user's sessions
 export const fetchSessions = async (userId) => {
     try {
         const response = await axios.get(`http://localhost:5555/users/${userId}/sessions`);
@@ -16,7 +17,7 @@ export const fetchSessions = async (userId) => {
         return [];
     }
 };
-
+//calculate daily activity from sessions
 export const calculateDailyActivity = (sessions) => {
     const activity = {};
     sessions.forEach(session => {
@@ -24,6 +25,7 @@ export const calculateDailyActivity = (sessions) => {
         if (!activity[day]) {
             activity[day] = 0;
         }
+        //increment the count of sessions for that day
         activity[day]++;
     });
     console.log('Daily activity:', activity); 

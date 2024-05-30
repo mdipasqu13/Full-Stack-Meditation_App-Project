@@ -10,11 +10,12 @@ import pytz
 from config import db, bcrypt
 
 
-
+# Define User model
+# Methods for setting password hash and checking password
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False, unique=True)
+    username = db.Column(db.String(20), nullable=False, unique=True) 
     _password_hash = db.Column(db.String(60), nullable=False)
 
     def set_password(self, password):
@@ -22,7 +23,7 @@ class User(db.Model, SerializerMixin):
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self._password_hash, password)
-    
+    # validations for username, can't be empty and must be at least 4 characters long
     @validates('username')
     def validate_username(self, key, username):
         if not username:
@@ -51,15 +52,7 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8') #check to see if encrypted password match
         )
-        
-    @validates('username')
-    def validate_username(self, key, username):
-        if not username:
-            raise ValueError("Username cannot be empty")
-        if len(username) < 4:
-            raise ValueError("Username must be at least 4 characters long")
-        return username
-        
+# define Meditation model
 class Meditation(db.Model, SerializerMixin):
     __tablename__ = 'meditations'
     id = db.Column(db.Integer, primary_key=True)
@@ -76,26 +69,26 @@ class Meditation(db.Model, SerializerMixin):
 
 
     serialize_rules = ('-sessions.user', '-sessions.meditation', '-categories.meditation')
-    
+    # requires 'title' to exist and not be empty
     @validates('title')
     def validate_title(self, key, title):
         if not title:
             raise ValueError("Title cannot be empty")
         return title
-
+    # requires 'duration' to exist and not be empty
     @validates('duration')
     def validate_duration(self, key, duration):
         if not duration:
             raise ValueError("Duration cannot be empty")
         return duration
-
+    # requires 'audio_url' to exist and not be empty
     @validates('audio_url')
     def validate_audio_url(self, key, audio_url):
         if not audio_url:
             raise ValueError("Audio URL cannot be empty")
         return audio_url
     
-    
+# define Session model
 class Session(db.Model, SerializerMixin):
     __tablename__ = 'sessions'
     id = db.Column(db.Integer, primary_key=True)
@@ -108,7 +101,7 @@ class Session(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='sessions')
     meditation = db.relationship('Meditation', back_populates='sessions')
     serialize_rules = ('-user.sessions', '-meditation.sessions')
-    
+    # convert session to dictionary with timezone conversion
     def to_dict(self):
         eastern = pytz.timezone('America/New_York')
         created_at_eastern = self.created_at.astimezone(eastern)
@@ -119,7 +112,7 @@ class Session(db.Model, SerializerMixin):
             'journal_entry': self.journal_entry,
             'created_at': created_at_eastern.isoformat()
         }
-    
+# define Favorite model  
 class Favorite(db.Model, SerializerMixin):
     __tablename__ = 'favorites'
     id = db.Column(db.Integer, primary_key=True)
@@ -130,7 +123,7 @@ class Favorite(db.Model, SerializerMixin):
     meditation = db.relationship('Meditation', back_populates='favorites')
 
     serialize_rules = ('-user.favorites', '-meditation.favorites')
-
+    # convert favorite to dictionary
     def to_dict(self):
         return {
             'id': self.id,

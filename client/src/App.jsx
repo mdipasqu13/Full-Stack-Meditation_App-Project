@@ -13,8 +13,11 @@ import About from './pages/About';
 import MeditationDetail from './pages/MeditationDetail';
 
 function App() {
+  // state stores the current user by default set to null
   const [user, setUser] = useState(null);
 
+  // useEffect hook to authenticate the user session when the app loads
+  //Send current session from local storage to the server to authenticate
   useEffect(() => {
     fetch('http://localhost:5555/authenticate-session', {
       method: 'POST',

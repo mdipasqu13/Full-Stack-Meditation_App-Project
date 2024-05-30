@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 import moment from 'moment';
 import axios from 'axios';
 
+//create a context for journal
 const JournalContext = createContext();
 
 const JournalProvider = ({ children, user }) => {
@@ -12,6 +13,7 @@ const JournalProvider = ({ children, user }) => {
   const [journalEntry, setJournalEntry] = useState('');
   const [editingEntryId, setEditingEntryId] = useState(null);
 
+  //useEffect to fetch all user's journal entries
   useEffect(() => {
     const fetchEntries = async () => {
       try {
@@ -27,15 +29,16 @@ const JournalProvider = ({ children, user }) => {
     fetchEntries();
   }, [user.id]);
 
+  //handles changes in the journal entry text area
   const handleJournalEntryChange = (event) => {
     setJournalEntry(event.target.value);
   };
-
+  //handles editing a journal entry
   const handleEdit = (entry) => {
     setEditingEntryId(entry.id);
     setJournalEntry(entry.journal_entry || '');
   };
-
+  //handles saving a journal entry
   const handleSave = async (entry) => {
     try {
       const response = await axios.patch(`http://127.0.0.1:5555/sessions/${entry.id}`, {
@@ -50,7 +53,7 @@ const JournalProvider = ({ children, user }) => {
       alert('Failed to update session. Please try again.');
     }
   };
-
+  //handles deleting a journal entry
   const handleDelete = async (id) => {
     const confirmed = window.confirm('Are you sure you want to delete this session?');
     if (confirmed) {
@@ -63,12 +66,12 @@ const JournalProvider = ({ children, user }) => {
       }
     }
   };
-
+  //handles canceling editing a journal entry
   const handleCancel = () => {
     setEditingEntryId(null);
     setJournalEntry('');
   };
-
+  //filters entries by selected date and sorts them by created_at
   const filteredEntries = entries.filter(entry => {
     const entryDate = moment(entry.created_at).subtract(4, 'hours').toDate();
     return entryDate.toDateString() === selectedDate.toDateString();

@@ -16,10 +16,12 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 
 app = Flask(__name__)
+# Enable Cross-Origin Resource Sharing (CORS) for all routes and origins
 CORS(app, resources={r"/*": {"origins": "*"}})
+# Initialize Bcrypt for password hashing
 bcrypt = Bcrypt(app)
 
-# app.secret_key = b'\x9c\x8a\xc3\xdd\xce\x9e\xb9\x99\xdb!8"w\xd5~\xde'
+# set a secret key for the app used for session management and security purposes
 app.secret_key = os.urandom(24)
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -30,8 +32,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
-# added this
-# db = SQLAlchemy(app)
+
 
 migrate = Migrate(app, db)
 

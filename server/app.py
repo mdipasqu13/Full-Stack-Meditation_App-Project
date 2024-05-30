@@ -7,6 +7,7 @@ import json
 
 from config import app, db, api
 
+# route to get most recent session for a user
 @app.route('/users/<int:user_id>/recent_session', methods=['GET'])
 def get_recent_session(user_id):
     session = Session.query.filter_by(user_id=user_id).order_by(Session.created_at.desc()).first()
@@ -15,12 +16,14 @@ def get_recent_session(user_id):
     else:
         return jsonify({"error": "No recent session found"}), 404
 
+# route to get all sessions for a user
 @app.route('/users/<int:user_id>/sessions', methods=['GET'])
 def get_user_sessions(user_id):
     sessions = [session.to_dict() for session in Session.query.filter_by(user_id=user_id).all()]
     
     return jsonify(sessions)
 
+# route to create a new session
 @app.route('/sessions', methods=['POST'])
 def create_session():
     
@@ -38,7 +41,7 @@ def create_session():
         db.session.rollback()
         return make_response({'error': str(e)}, 400)
 
-
+# route to update an existing session
 @app.route('/update_session/<int:id>', methods=['PATCH'])
 def update_session(id):
     data = request.get_json()
@@ -55,7 +58,8 @@ def update_session(id):
         db.session.rollback()
         return make_response({'error': str(e)}, 400)
 
-@app.route('/users', methods=['POST']) #sign up route
+# route to create a new user
+@app.route('/users', methods=['POST']) 
 def manage_users():
         data = request.json
         new_user = User(username=data.get('username')) #create new user instance 
@@ -67,6 +71,7 @@ def manage_users():
         response.set_cookie('user_id', str(new_user.id))
         return response, 201
 
+# route to log out a user
 @app.route('/logout', methods=["GET"])
 def logout():
     session['user_id'] = None #clear session hash
@@ -74,7 +79,8 @@ def logout():
     response.delete_cookie('user_id')
     return response, 200
 
-@app.route('/authenticate-session', methods=['POST']) #route for authentication 
+# route for session authentication
+@app.route('/authenticate-session', methods=['POST']) 
 def authorize():
     cookie_id = request.cookies.get('user_id')  
     data = request.get_json()
@@ -85,6 +91,7 @@ def authorize():
             return make_response(user.to_dict(only=['id', 'username'])), 200
     return make_response({'message': 'failed to authenticate'}), 401
 
+# route to log in a user
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -97,6 +104,7 @@ def login():
         return response, 200
     return make_response({'message': 'Invalid username or password'}), 401
 
+# route to add a favorite meditation for a user
 @app.route('/favorites', methods=['POST'])
 def add_favorite():
     data = request.get_json()
@@ -112,11 +120,13 @@ def add_favorite():
         db.session.rollback()
         return make_response({'error': str(e)}, 400)
 
+# route to get all favorite meditations for a user
 @app.route('/favorites/<int:user_id>', methods=['GET'])
 def get_favorites(user_id):
     favorites = [fav.to_dict() for fav in Favorite.query.filter_by(user_id=user_id).all()]
     return jsonify(favorites)
 
+# route to delete a favorite meditation for a user
 @app.route('/favorites/<int:user_id>/<int:meditation_id>', methods=['DELETE'])
 def delete_favorite(user_id, meditation_id):
     favorite = Favorite.query.filter_by(user_id=user_id, meditation_id=meditation_id).first()
@@ -127,8 +137,7 @@ def delete_favorite(user_id, meditation_id):
     else:
         return make_response({'error': 'Favorite not found'}, 404)
 
-
-# route to get all meditations in db
+# Resource to get all meditations
 class Meditations(Resource):
     def get(self):
         meditations = [meditation.to_dict() for meditation in Meditation.query.all()]
@@ -147,7 +156,7 @@ class MeditationsById(Resource):
         
 api.add_resource(MeditationsById, '/meditations/<int:id>')
 
-#route to access user info and delete user 
+# Resource to access all user data and delete user
 class UsersById(Resource):
     def get(self, id):
         user = User.query.filter(User.id == id).first()
@@ -188,7 +197,7 @@ class UsersById(Resource):
 
 api.add_resource(UsersById, '/users/<int:id>')
 
-
+# Resource to access session info and delete session
 class SessionsById(Resource):
     def get(self, id):
         session = Session.query.filter(Session.id == id).first()

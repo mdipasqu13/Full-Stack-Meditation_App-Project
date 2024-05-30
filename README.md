@@ -1,56 +1,39 @@
 # Getting Started
 
 Make sure you are in your root directory. Begin by navigating to server directory and run the following commands:
+    
     cd server 
+    
     pipenv install
+    
     pipenv shell
+   
     flask db upgrade head
+    
     python seed.py
+
+Navigate to client directory and run the following commands:
+    
+    cd client
+   
+    npm install
+    
+    npm install --legacy-peer-deps
+
+Finally, get your backend and frontend running. Navigate to the server directory and run the following command:
+
+    cd server
 
     python app.py 
 
-In a new terminal, begin by navigating to client directory and run the following commands:
+Then, in a new terminal, navigate to the client directory and run the following command:
+
     cd client
-    npm install
-    npm install --legacy-peer-deps
 
     npm run dev
 
 
-<!-- Back-end Installation
-Ensure you are in the root directory of the project.
-
-Install pipenv and dependencies:
-
-    pipenv install
-
-Activate the virtual environment:
-
-    pipenv shell
-
-Database Setup
-Navigate to the server directory:
-
-    cd server
-
-Create and seed your database:   
-
-    flask db upgrade head
-    python seed.py
-
-In client directory, run this legacy dependancy for calendar:
-
-    npm install --legacy-peer-deps
-
-Open your terminal using your pipenv shell, navigate to server and run your backend:
-    cd server
-    python app.py
-
-Open another terminal and using your pipenv shell, navigate to client and run your frontend:
-    cd client
-    npm run dev -->
-
-# Meditation App (title pending)
+# Calm-Space
 
 A meditation platform that provides users a variety of filterable audio backgrounds and guided options for meditating, encourages users to practice regularly by recording their use history, and allows users to interact with the platform through journaling to record their thoughts and feedback about their sessions. 
 

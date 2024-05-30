@@ -16,6 +16,7 @@ const Meditations = ({ user }) => {
   const selectedMeditationId = location.state?.meditationId;
   const meditationRefs = useRef({});
 
+  // Fetch meditations and favorites when the app starts or the user changes
   useEffect(() => {
     const fetchMeditations = async () => {
       try {
@@ -39,13 +40,13 @@ const Meditations = ({ user }) => {
     fetchMeditations();
     fetchFavorites();
   }, [user]);
-
+  //useEffect to scroll to selected meditation
   useEffect(() => {
     if (selectedMeditationId && meditationRefs.current[selectedMeditationId]) {
       meditationRefs.current[selectedMeditationId].scrollIntoView({ behavior: 'smooth' });
     }
   }, [selectedMeditationId, filteredMeditations]);
-
+  //filter meditations based on selected category and duration
   useEffect(() => {
     const filterMeditations = () => {
       let filtered = meditations;
@@ -60,7 +61,7 @@ const Meditations = ({ user }) => {
 
     filterMeditations();
   }, [category, duration, meditations]);
-
+//sort meditations to show favorites first
   const sortedMeditations = [
     ...filteredMeditations.filter(meditation => favorites.includes(meditation.id)),
     ...filteredMeditations.filter(meditation => !favorites.includes(meditation.id))

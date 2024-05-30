@@ -16,6 +16,8 @@ const UserCalendar = ({ user }) => {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+
+    // Fetch the user's sessions when the component mounts or user changes
     useEffect(() => {
         console.log('User ID:', user.id);
         const fetchSessions = async () => {
@@ -46,6 +48,7 @@ const UserCalendar = ({ user }) => {
         fetchSessions();
     }, [user.id]);
 
+    //calculate streaks for sessions
     const calculateStreaks = (sessions) => {
         // Extract unique dates from sessions using the adjusted createdAt time
         const uniqueDates = [...new Set(sessions.map(session => moment(session.start).format('YYYY-MM-DD')))];
@@ -63,13 +66,13 @@ const UserCalendar = ({ user }) => {
         }
         setStreaks(maxStreak);
     };
-
+    //handles the click event on the calendar to open the modal
     const handleEventClick = (event) => {
         setSelectedEvent(event);
         setIsModalOpen(true);
         console.log(event);
     };
-
+    
     const handleSave = (updatedEvent) => {
         setSessions(sessions.map(e => e.id === updatedEvent.id ? updatedEvent : e));
         setIsModalOpen(false);

@@ -1,5 +1,6 @@
 import React from 'react';
 
+// FilterBar component to filter meditations by category and duration
 const FilterBar = ({ setCategory, setDuration }) => {
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);

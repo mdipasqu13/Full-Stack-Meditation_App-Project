@@ -19,7 +19,7 @@ const JournalModal = ({ event, onClose, onSave, onDelete }) => {
   useEffect(() => {
     setJournalEntry(event.journal_entry || '');
   }, [event]);
-
+  //handles save to add journal entry to session
   const handleSave = async () => {
     try {
       const response = await fetch(`http://127.0.0.1:5555/update_session/${event.id}`, {
@@ -42,7 +42,7 @@ const JournalModal = ({ event, onClose, onSave, onDelete }) => {
       alert('Failed to update session. Please try again.');
     }
   };
-
+  //handles delete to delete session, asks for confirmation
   const handleDelete = () => {
     const confirmed = window.confirm('Are you sure you want to delete this session?');
     if (confirmed) {

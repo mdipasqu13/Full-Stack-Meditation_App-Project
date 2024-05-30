@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+//state variables for input values
 const SignUpForm = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');

@@ -7,6 +7,7 @@ import './MeditationsCard.css';
 const MeditationsCard = ({ meditation, user }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
+  //useEffect to check if meditation is favorited
   useEffect(() => {
     const checkFavorite = async () => {
       try {
@@ -21,6 +22,7 @@ const MeditationsCard = ({ meditation, user }) => {
     checkFavorite();
   }, [user.id, meditation.id]);
 
+  //function to handle favorite button click. If meditation is favorited, delete from favorites, else add to favorites. 
   const handleFavorite = async () => {
     try {
       if (isFavorite) {
@@ -36,7 +38,7 @@ const MeditationsCard = ({ meditation, user }) => {
       console.error('Error updating favorite:', error);
     }
   };
-
+  //function to handle play button click
   const handlePlay = async () => {
     try {
       const response = await axios.post('http://localhost:5555/sessions', {

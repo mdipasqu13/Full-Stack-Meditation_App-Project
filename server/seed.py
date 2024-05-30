@@ -8,13 +8,13 @@ from os.path import join, dirname
 
 fake = Faker()
 
-
+# create meditations from JSON file path
 def create_meditations():
     file_path = join(dirname(__file__), '../client/src/assets/Meditations.json')
     
     with open(file_path, 'r') as file:
         data = json.load(file)
-        
+    # Create a new meditation object for each meditation in the JSON file
     for meditation_data in data:
         meditation = Meditation(
             meditation_name=meditation_data['title'],

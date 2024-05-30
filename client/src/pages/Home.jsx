@@ -11,11 +11,12 @@ function Home({ user, updateUser }) {
   const [streak, setStreak] = useState(0);
   const navigate = useNavigate();
 
+  // Get a random affirmation from the affirmations JSON file
   const getRandomAffirmation = () => {
     const randomIndex = Math.floor(Math.random() * affirmations.affirmations.length);
     return affirmations.affirmations[randomIndex];
   };
-
+  // Calculate the user's current streak based on their session history
   const calculateStreak = (sessions) => {
     // Extract unique dates from sessions using the adjusted createdAt time
     const uniqueDates = [...new Set(sessions.map(session => moment(session.createdAt).format('YYYY-MM-DD')))];
@@ -33,7 +34,7 @@ function Home({ user, updateUser }) {
     }
     return maxStreak;
   };
-
+//useEffect to fetch recent meditations and calculate streak
   useEffect(() => {
     const fetchRecentMeditations = async () => {
       try {
@@ -59,12 +60,13 @@ function Home({ user, updateUser }) {
         console.error('Error fetching recent session:', error);
       }
     };
+    //set a random affirmation
     setAffirmation(getRandomAffirmation());
     if (user?.id) {
       fetchRecentMeditations();
     }
   }, [user?.id]);
-
+  //handle meditation click and navigate eto the meditation page
   const handleMeditationClick = (meditationId) => {
     navigate('/meditations', { state: { meditationId } });
   };

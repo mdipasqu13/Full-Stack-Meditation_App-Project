@@ -15,12 +15,13 @@ function Profile({ user, updateUser }) {
   const [dailyActivity, setDailyActivity] = useState({});
   const navigate = useNavigate();
 
+  //fetch recent meditations and activity when app starts or user changes
   useEffect(() => {
     const fetchRecentMeditations = async () => {
       try {
         const response = await axios.get(`http://localhost:5555/users/${user.id}/sessions`);
         const sessions = response.data.reverse(); // Reverse to get the most recent sessions first
-
+        // Get unique meditations for the last 3 sessions
         const uniqueMeditationsMap = new Map();
         for (const session of sessions) {
           if (uniqueMeditationsMap.size >= 3) break;
@@ -47,7 +48,8 @@ function Profile({ user, updateUser }) {
       fetchActivity();
     }
   }, [user?.id]);
-
+  //handle delete user funciton
+  //ask if sure, then if sure delete user, log out, clear local storage/update user state to null, and navigate to sign in
   const handleDeleteUser = () => {
     console.log(user.id);
     const confirmed = window.confirm("Are you sure you want to delete your profile?");
@@ -76,10 +78,12 @@ function Profile({ user, updateUser }) {
   if (!user) {
     return null;
   }
-
+  //gets heatmap values for the calendar
   const getHeatmapValues = () => {
     const values = [];
+    //start date is the first day of the year
     const startDate = new Date(new Date().getFullYear(), 0, 1);
+    //end date is the last day of the year
     const endDate = new Date(new Date().getFullYear(), 11, 31);
     for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
       const dayKey = moment(date).format('YYYY-MM-DD');
@@ -107,6 +111,7 @@ function Profile({ user, updateUser }) {
         endDate={new Date(new Date().getFullYear(), 11, 31)}
         values={getHeatmapValues()}
         classForValue={(value) => {
+          //color empty for days with no data, and match the color scale to the number of sessions
           if (!value || value.count === 0) {
             return 'color-empty';
           }

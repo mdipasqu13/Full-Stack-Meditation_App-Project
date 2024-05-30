@@ -5,6 +5,7 @@ import './NavBar.css';
 const NavBar = ({ user, updateUser }) => {
   const navigate = useNavigate();
 
+  //handles user logout, sets state to null, removes user from local storage, and navigates to signin page
   const handleLogout = () => {
     fetch('http://localhost:5555/logout')
       .then(res => res.json())
@@ -41,8 +42,8 @@ const NavBar = ({ user, updateUser }) => {
           <NavLink to="/resources" className={({ isActive }) => (isActive ? 'navbar-link active' : 'navbar-link')}>
             Resources
           </NavLink>
-            
-          {user ? (
+      
+          {user ? ( //conditional rendering based on user state
             <>
               <NavLink
                 to="/profile"
